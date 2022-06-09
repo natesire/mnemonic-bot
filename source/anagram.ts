@@ -7,38 +7,31 @@ export class Anagram {
       return '';
   }
 
-  // Time Complexity: O(?)
-  // Space Complexity: O(?)
-  permutatePossibleAnagrams(word: string): string {
-    let permutations: string[] = [];
-    let possibleAnagrams: string[] = [];
-    let letters: string[] = word.split('');
-
-    // max permutations n = factorial of n digits
-    let maxPermutations = this.factorialize(letters.length);
-
-    for(let i = 0; i < maxPermutations; i++) {
-      return this.swap(i, i+1, word);
-    };
+  // can 'friend' be scrambled to equal 'finder'
+  // faster time complexity than brute forcing the permutations, counter intuitive
+  // just make sure the letters are in both words
+  matchScrambled(wordOne: string, wordTwo:string): boolean {
+    if(!this.matchLength(wordOne, wordTwo)) { return false; }
+    let wordOneChars = wordOne.split('');
+    let wordTwoChars = wordTwo.split('');
+    // find difference between the two words
+    let diff = wordOneChars.filter(char => !wordTwoChars.includes(char)); // O(n) linear time complexity
+    if(diff.length > 0) { return false; }
+    return true;
   }
 
-  swap(i:number, j:number, word:string) {
-    let letters = word.split('');
-    let charA = letters[i];
-    let charB = letters[j];
-    letters[i] = charB;
-    letters[j] = charA;
-    //join the letters back together
-    return letters.join('');
+  // match length to eliminate possible scrambled anagram
+  matchLength(wordOne: string, wordTwo:string): boolean {
+    return wordOne.length === wordTwo.length;
   }
 
-  // move to another class
-  factorialize(num) {
-    let factorialized = num;
-    if (num === 0 || num === 1) return 1; 
-    while (num > 1) { 
-      num--;
-      factorialized = factorialized * num;
+  // calculates max possible anagrams of a word 
+  factorialize(n:number) : number {
+    let factorialized = n;
+    if (n === 0 || n === 1) return 1; // factorial of 0 equals 1
+    while (n > 1) { //  while is more efficient than for loop
+      n--;
+      factorialized = factorialized * n;
     }
     return factorialized;
   }

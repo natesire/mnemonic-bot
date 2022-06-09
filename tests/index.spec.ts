@@ -11,8 +11,10 @@ describe("should find anagram of", () => {
       expect(anagram.factorialize(5)).toBe(120);
     });
 
-    it('should return first permutation', () => {
+    it('should cover edge case, extra repeat letter', () => {
       let anagram = new Anagram('dictionary.txt');
-      expect(anagram.swap(0, 1, 'friend')).toContain('rfiend');
+      let wordOneChars = 'friend'.split('');
+      let wordTwoChars = 'rfiends'.split('');
+      expect(anagram.matchScrambled('friends', 'rfiend')).toEqual(false)
     });
 });
