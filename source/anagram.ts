@@ -1,7 +1,7 @@
 export class Anagram {
-    constructor(public word: string) { }
+    constructor(public dictionaryFile: string) { }
 
-    findAnagrams(word: string): string {
+    find(word: string): string {
         return 'friend';
     }
 }

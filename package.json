@@ -4,15 +4,24 @@
   "description": "First version of Anagram Finder Written in Node JS with Multithreading",
   "main": "index.js",
   "dependencies": {},
+  "type": "module",
   "devDependencies": {
+    "@babel/core": "^7.18.2",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-typescript": "^7.17.12",
     "@types/jest": "^28.1.1",
+    "babel-jest": "^28.1.1",
+    "cross-env": "^7.0.3",
     "jest": "^28.1.1",
+    "rimraf": "^3.0.2",
     "ts-jest": "^28.0.4",
     "ts-node": "^10.8.1",
+    "ttypescript": "^1.5.13",
     "typescript": "^4.7.3"
   },
   "scripts": {
-    "test": "jest"
+    "pretest": "rimraf ./dist",
+    "test": "tsc --p ./tsconfig.json && cross-env NODE_OPTIONS=--experimental-vm-modules jest --maxWorkers=4 --coverage ./dist/tests/"
   },
   "repository": {
     "type": "git",
