@@ -1,0 +1,33 @@
+{
+  "name": "anagram",
+  "version": "1.0.0",
+  "description": "First version of Anagram Finder Written in Node JS with Multithreading",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^28.1.1",
+    "jest": "^28.1.1",
+    "ts-jest": "^28.0.4",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.3"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natesire/anagram.git"
+  },
+  "keywords": [
+    "anagram",
+    "finder",
+    "node",
+    "js"
+  ],
+  "author": "Nathan Sire",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/natesire/anagram/issues"
+  },
+  "homepage": "https://github.com/natesire/anagram#readme"
+}
