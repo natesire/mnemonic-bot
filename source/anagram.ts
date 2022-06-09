@@ -1,28 +1,25 @@
 export class Anagram {
   constructor(public dictionaryFile: string) { }
 
-  find(word: string): string {
-      if(word === 'finder') { return 'friend'; }
-      if(word === 'friend') { return 'finder'; }
-      return '';
-  }
-
-  // can 'friend' be scrambled to equal 'finder'
+  // can input word 'friend' be scrambled to equal dictionary word 'finder'
   // faster time complexity than brute forcing the permutations, counter intuitive
+  // O(n) instead of O(n^2)
   // just make sure the letters are in both words
-  matchScrambled(wordOne: string, wordTwo:string): boolean {
-    if(!this.matchLength(wordOne, wordTwo)) { return false; }
-    let wordOneChars = wordOne.split('');
-    let wordTwoChars = wordTwo.split('');
-    // find difference between the two words
-    let diff = wordOneChars.filter(char => !wordTwoChars.includes(char)); // O(n) linear time complexity
-    if(diff.length > 0) { return false; }
-    return true;
-  }
-
-  // match length to eliminate possible scrambled anagram
-  matchLength(wordOne: string, wordTwo:string): boolean {
-    return wordOne.length === wordTwo.length;
+  matchScrambled(wordOne: string, wordTwo:string): number {
+    let diffN: number = Math.abs(wordOne.length - wordTwo.length);
+    if(diffN === 0) {
+      let wordOneChars = wordOne.split('');
+      let wordTwoChars = wordTwo.split('');
+      // find difference between the two words
+      // parent iteration of the dictionary will cause O(n^2)
+      //let diff = wordOneChars.filter(char => !wordTwoChars.includes(char));
+      wordOneChars.forEach(char => {
+        console.log(char);
+        // check if repeat
+        if(!wordTwoChars.includes(char)) { diffN++; }
+      });
+    }
+    return diffN;
   }
 
   // calculates max possible anagrams of a word 
