@@ -60,3 +60,11 @@ MacBookPro: ~$
 2. Load the new anagram hashmap into memory.
 3. Run the script to find an anagram for a word.
 4. Or talk to a node server.
+
+# Steps
+
+npm test
+
+# Troubleshooting
+
+make sure the jest config file uses es modules and not module.exports = {}
