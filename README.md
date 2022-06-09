@@ -46,21 +46,17 @@ Dictionary loaded in 250 ms
 AnagramFinder>stop
 4 Anagrams found for stop in 12ms
 pots,opts,stop,tops
-
-
 					
 AnagramFinder>accept
 No anagrams found for accept in 9ms
 	
+AnagramFinder>exit
+MacBookPro: ~$
+	
 ----------------------------------
-Solution
+# Solution
 	
 1. Preprocess the dictionary and output an anagram dictionary in a hashmap data structure.
 2. Load the new anagram hashmap into memory.
 3. Run the script to find an anagram for a word.
 4. Or talk to a node server.
-
-
-					
-AnagramFinder>exit
-MacBookPro: ~$
