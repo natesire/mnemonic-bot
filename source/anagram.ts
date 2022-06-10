@@ -1,4 +1,7 @@
 import fs from 'fs';
+
+// anagram lookup in constant time using hash map
+// pre-processing of dictionary in linear time by using prime numbers
 export class Anagram {
   public dictionary: string[] = []; // 263,000 words in dictionary
   //public dictionaryFile: string;
@@ -28,14 +31,43 @@ export class Anagram {
     } catch (error) {
       console.log(error);
     }
-    
+
     let time2 = new Date().getTime();
     console.log(`${time2 - time1} ms to load dictionary`);
     return dictionary;
   }
 
+  sortWord(word: string) {
+    // merge sort, O(n^2) to O(n log n)
+    // time complexity would be a problem but max word length is n
+    return word.split('').sort().join(''); 
+  }
+
+  // use multiplcation to get rid of linear time
+  // use prime numbers to get unique numbers
+  // pre-process the dictionary to number fingerprints
+  fingerprint(word) {
+    let fingerprint = 1;
+    // linear time
+    word.split('').forEach(char => {
+      console.log(char);
+      console.log(this.alphaPrimes()[char]);
+      fingerprint = fingerprint * this.alphaPrimes()[char];
+    });
+    return fingerprint;
+  }
+
+  alphaPrimes(){
+    // get first 26 prime numbers
+    return { a:2, b:3, c:5, d:7, e:11, f:13, g:17, h:19, i:23, j:29, k:31, l:37, m:41, n:43, 
+      o:47, p:53, q:59, r:61, s:67, t:71, u:73, v:79, w:83, x:89, y:97, z:101 };
+  }
+
   shardDictionaryByLength(dictionary: string[]) {
 
+  }
+
+  longestWord() {
   }
 
   // can input word 'friend' be scrambled to equal dictionary word 'finder'
