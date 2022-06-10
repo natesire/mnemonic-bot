@@ -1,5 +1,27 @@
+import fs from 'fs';
 export class Anagram {
-  constructor(public dictionaryFile: string) { }
+  public dictionary: string[] = []; // 263,000 words in dictionary
+
+  constructor(public dictionaryFile: string) {
+    this.dictionary = this.loadDictionary();
+  }
+
+  loadDictionary(): string[] {
+    let time1 = new Date().getTime();
+    //read file into array
+    try {
+      var dictionary: string[] = fs.readFileSync(this.dictionaryFile, 'utf8').split('\n');
+    } catch (error) {
+      console.log(error);
+    }
+    let time2 = new Date().getTime();
+    console.log(`${time2 - time1} ms to load dictionary`);
+    return dictionary;
+  }
+
+  shardDictionaryByLength(dictionary: string[]) {
+
+  }
 
   // can input word 'friend' be scrambled to equal dictionary word 'finder'
   // faster time complexity than brute forcing the permutations, counter intuitive
@@ -14,7 +36,6 @@ export class Anagram {
       // parent iteration of the dictionary will cause O(n^2)
       //let diff = wordOneChars.filter(char => !wordTwoChars.includes(char));
       wordOneChars.forEach(char => {
-        console.log(char);
         // check if repeat
         if(!wordTwoChars.includes(char)) { diffN++; }
       });
