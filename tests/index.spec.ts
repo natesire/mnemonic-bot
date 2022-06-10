@@ -1,9 +1,21 @@
 import { Anagram } from '../source/anagram.js';
 
-describe("should find anagram of", () => {
-  it('should factorialize 0 to 1', () => {
+describe("should find anagram", () => {
+
+  it('should throw error if file does not exist', () => {
+    expect(() => {
+      new Anagram('/path/to/file/that/does/not/exist.txt');
+    }).toThrowError('File not found!');
+  });
+
+  it('should load dictionary', () => {
     let anagram = new Anagram('./dictionary.txt');
     expect(anagram.dictionary).toContain('Aaron'); // normalize all to lower case
+  });
+
+  it('should factorialize 0 to 1', () => {
+    let anagram = new Anagram('dictionary.txt');
+    expect(anagram.factorialize(0)).toBe(1);
   });
 
   it('should factorialize 1 to 1', () => {
