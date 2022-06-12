@@ -1,4 +1,5 @@
-import fs from 'fs';
+//import fs from 'fs';
+const fs = require('fs');
 
 // find all anagrams in dictionary
 export class Anagram {

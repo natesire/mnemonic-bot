@@ -1,4 +1,18 @@
-# anagram
+# v1.0 setup
+
+Install node for windows
+
+https://nodejs.org/en/download/
+
+Install Node for Ubuntu
+
+https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04
+
+# v2.0 setup
+
+plan on creating a more portable exe
+
+# anagram directions
 Anagram Finder
 
 Anagram Finder Programming Task
