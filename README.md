@@ -14,6 +14,12 @@ And run the appropriate exe depending on your system. There are executables for 
 
 ```./anagram-win.exe```
 
+# How to compile with pkg
+
+```npm install --global pkg```
+
+```pkg index.js```
+
 # Manual Setup
 
 You will need Node JS installed on your machine to run the script.
