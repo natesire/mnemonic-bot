@@ -5,7 +5,7 @@ describe("should find anagram", () => {
   let anagram: Anagram;
 
   beforeAll(() => {
-    anagram = new Anagram('dictionary.test.txt');
+    anagram = new Anagram('dictionary.txt');
   });
 
   it('should throw error if file does not exist', () => {
@@ -21,20 +21,6 @@ describe("should find anagram", () => {
   
   it('should sort word', () => {
     expect(anagram.sortWord('aardwolf')).toEqual('aadflorw');
-  });
-
-  it('gets value for key', () => {
-    const dictionary = anagram.loadDictionaryIntoArray();
-    let sortedDictionary = anagram.sortDictionaryWords(dictionary);
-    console.log(sortedDictionary);
-    expect(sortedDictionary.get('aaadkrrv')).toBe('aardvark,aaadkrrv'); // aardvark -> aadkrrvab
-  });
-
-  it('gets value for key for three words', () => {
-    const dictionary = anagram.loadDictionaryIntoArray();
-    let sortedDictionary = anagram.sortDictionaryWords(dictionary);
-    console.log(sortedDictionary);
-    expect(sortedDictionary.get('aaadkrrv')).toBe('aardvark,aaadkrrv,aardvark,aaadkrrv'); // aardvark -> aadkrrvab
   });
 
   it('gets cinema for iceman', () => {

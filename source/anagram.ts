@@ -39,16 +39,16 @@ export class Anagram {
 
   // sorts the entire file and stores it in a hash map
   sortDictionaryWords(dictionary: string[]) : Map<string, string> { // array passed by reference
-    let i = 0;
     let delimeter: string = '';
-    
+    let i = 0;
+
     dictionary.forEach(word => {
       let sortedWordKey = this.sortWord(word);
       let preExistingWord = this.sortedDictionary.get(sortedWordKey); // check if pre-existing key
 
-      let commaSeperatedWords;
-      if(preExistingWord) { commaSeperatedWords = preExistingWord + delimeter + word; }
-      if(!preExistingWord) { commaSeperatedWords = word; }
+      let commaSeperatedWords = '';
+      if(preExistingWord) { commaSeperatedWords = preExistingWord + delimeter; }
+      commaSeperatedWords = commaSeperatedWords + word; 
 
       // add anagram to hash map
       // lower case prevents accidental duplicates and matches command line input
@@ -57,10 +57,10 @@ export class Anagram {
         let commaSeperatedWordsLowerCase = commaSeperatedWords.toLowerCase();
         this.sortedDictionary.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
       }
-
-      delimeter = ',';
       i++;
+      delimeter = ',';
     });
+    console.log(`count: ${i}`);
     return this.sortedDictionary;
   }
 

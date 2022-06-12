@@ -9,7 +9,7 @@ const rl = readline.createInterface({
 
 var waitForUserInput = function() {
   rl.question("enter word to find anagrams: ", function(word) {
-    let anagram = new Anagram('../dictionary.test.txt');
+    let anagram = new Anagram('../dictionary.txt');
     let anagrams = anagram.findAnagrams(word);
 
     // return anagrams if found
