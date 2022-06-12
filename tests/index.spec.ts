@@ -25,14 +25,14 @@ describe("should find anagram", () => {
 
   it('gets value for key', () => {
     const dictionary = anagram.loadDictionaryIntoArray();
-    let sortedDictionary = anagram.iterateDictionaryAndSort(dictionary);
+    let sortedDictionary = anagram.sortDictionaryWords(dictionary);
     console.log(sortedDictionary);
     expect(sortedDictionary.get('aaadkrrv')).toBe('aardvark,aaadkrrv'); // aardvark -> aadkrrvab
   });
 
   it('gets value for key for three words', () => {
     const dictionary = anagram.loadDictionaryIntoArray();
-    let sortedDictionary = anagram.iterateDictionaryAndSort(dictionary);
+    let sortedDictionary = anagram.sortDictionaryWords(dictionary);
     console.log(sortedDictionary);
     expect(sortedDictionary.get('aaadkrrv')).toBe('aardvark,aaadkrrv,aardvark,aaadkrrv'); // aardvark -> aadkrrvab
   });

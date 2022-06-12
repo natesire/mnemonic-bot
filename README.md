@@ -6,7 +6,7 @@ Go to this folder
 
 And run the appropriate exe depending on your system. There are executables for windows, linux and mac.
 
-```./anagram-index-win.exe```
+```./anagram-win.exe```
 
 # Run v2.0
 
