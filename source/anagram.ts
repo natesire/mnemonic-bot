@@ -43,19 +43,20 @@ export class Anagram {
     let delimeter: string = '';
     
     dictionary.forEach(word => {
-      let preExistingWord = ' ' + this.sortedDictionary.get(this.sortWord(word)); // check if pre-existing key
-      if(preExistingWord === ' ' + undefined) { preExistingWord = ''; }
+      let preExistingWord = this.sortedDictionary.get(this.sortWord(word)); // check if pre-existing key
       let sortedWordKey = this.sortWord(word);
-      
-      let commaSeperatedWords = preExistingWord + delimeter + word;
-      if(commaSeperatedWords.charAt(0) === ',') { commaSeperatedWords = commaSeperatedWords.substring(1); } // strip off the first comma
-      if(commaSeperatedWords.charAt(0) === ' ') { commaSeperatedWords = commaSeperatedWords.substring(1); }
 
-      // sets the hash map with anagrams
-      // lower case prevents accidental duplicates
-      let sortedWordKeyLowerCase = sortedWordKey.toLowerCase();
-      let commaSeperatedWordsLowerCase = commaSeperatedWords.toLowerCase();
-      this.sortedDictionary.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
+      let commaSeperatedWords;
+      if(preExistingWord) { commaSeperatedWords = preExistingWord + delimeter + word; }
+      if(!preExistingWord) { commaSeperatedWords = word; }
+
+      // add anagram to hash map
+      // lower case prevents accidental duplicates and matches command line input
+      if(sortedWordKey && commaSeperatedWords) {
+        let sortedWordKeyLowerCase = sortedWordKey.toLowerCase();
+        let commaSeperatedWordsLowerCase = commaSeperatedWords.toLowerCase();
+        this.sortedDictionary.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
+      }
 
       delimeter = ',';
       i++;
