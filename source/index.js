@@ -17,7 +17,11 @@ rl.question('enter word to find anagrams:', function (word) {
   let anagram = new Anagram('../dictionary3.txt');
   const dictionary = anagram.loadDictionaryIntoArray();
   let sortedDictionary = anagram.iterateDictionaryAndSort(dictionary);
-  let anagrams = sortedDictionary.get(sortedWord)
-  console.log(anagrams);
-  rl.close();
+  let anagrams = sortedDictionary.get(sortedWord);
+
+  // return anagrams if found
+  if(anagrams) console.log(anagrams);
+  if(anagrams === undefined) console.log(`No anagrams found for ${word}`);
+  
+  rl.close(); // close the readline interface
 });
