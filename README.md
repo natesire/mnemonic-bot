@@ -1,18 +1,30 @@
 # v1.0 setup
 
-Install node for windows
+Go to this folder
 
-https://nodejs.org/en/download/
+```cd ./anagram/compile-v1```
 
-Install Node for Ubuntu
+And run the appropriate exe depending on your system. There are executables for windows, linux and mac.
 
-https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04
+```./index-win.exe```
 
 # v2.0 setup
 
 plan on creating a more portable exe
 
-# anagram directions
+# Manual Setup
+
+You will need Node JS installed on your machine to run the script.
+
+For Ubuntu
+
+https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04
+
+Install node for windows
+
+https://nodejs.org/en/download/
+
+# directions followed
 Anagram Finder
 
 Anagram Finder Programming Task
