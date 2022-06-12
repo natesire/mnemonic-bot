@@ -1,4 +1,4 @@
-# v1.0 setup
+# Run v1.0
 
 Go to this folder
 
@@ -6,11 +6,13 @@ Go to this folder
 
 And run the appropriate exe depending on your system. There are executables for windows, linux and mac.
 
-```./index-win.exe```
+```./anagram-index-win.exe```
 
-# v2.0 setup
+# Run v2.0
 
-plan on creating a more portable exe
+```cd ./anagram/compile-v2/```
+
+```./anagram-win.exe```
 
 # Manual Setup
 
@@ -25,6 +27,7 @@ Install node for windows
 https://nodejs.org/en/download/
 
 # directions followed
+
 Anagram Finder
 
 Anagram Finder Programming Task
