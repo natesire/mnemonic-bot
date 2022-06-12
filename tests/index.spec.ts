@@ -36,4 +36,8 @@ describe("should find anagram", () => {
     console.log(sortedDictionary);
     expect(sortedDictionary.get('aaadkrrv')).toBe('aardvark,aaadkrrv,aardvark,aaadkrrv'); // aardvark -> aadkrrvab
   });
+
+  it('gets cinema for iceman', () => {
+    expect(anagram.findAnagrams('iceman')).toContain('cinema');
+  });
 });

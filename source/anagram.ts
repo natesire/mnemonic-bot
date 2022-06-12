@@ -5,6 +5,7 @@ import fs from 'fs';    // use this for esmodules and typescript
 export class Anagram {
   public dictionary: string[] = []; 
   public sortedDictionary: Map<string, string>;
+  public dictionaryArr: string[];
   
   constructor(public dictionaryFile: string) {
     this.dictionaryFile = dictionaryFile; // loads dictionary file
@@ -14,6 +15,21 @@ export class Anagram {
     if (!fs.existsSync(this.dictionaryFile)) {
       throw new Error('File not found!');
     }
+
+    let timeOne = this.time();
+    this.dictionaryArr = this.loadDictionaryIntoArray();
+    let timeTwo = this.time();
+    console.log(`time taken to load dictionary: ${timeTwo - timeOne} milliseconds`);
+  }
+
+  findAnagrams(word: string) {
+    let timeOne = this.time();
+    let sortedWord = this.sortWord(word);
+    let sortedDictionary = this.sortDictionaryWords(this.dictionaryArr);
+    let anagrams = sortedDictionary.get(sortedWord);
+    let timeTwo = this.time();
+    console.log(`time taken for anagram: ${timeTwo - timeOne} milliseconds`);
+    return anagrams;
   }
 
   loadDictionaryIntoArray(): string[] {
@@ -36,7 +52,10 @@ export class Anagram {
       if(commaSeperatedWords.charAt(0) === ' ') { commaSeperatedWords = commaSeperatedWords.substring(1); }
 
       // sets the hash map with anagrams
-      this.sortedDictionary.set(sortedWordKey, commaSeperatedWords);
+      // lower case prevents accidental duplicates
+      let sortedWordKeyLowerCase = sortedWordKey.toLowerCase();
+      let commaSeperatedWordsLowerCase = commaSeperatedWords.toLowerCase();
+      this.sortedDictionary.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
 
       delimeter = ',';
       i++;
@@ -52,8 +71,7 @@ export class Anagram {
     return word.split('').sort().join(''); 
   }
 
-  // normalize to lower case, prevent accidental duplicates
-  normalizeWord(word: string) {
-    return word.toLowerCase();
+  time() {
+    return new Date().getTime();
   }
 }

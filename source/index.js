@@ -11,13 +11,8 @@ const rl = readline.createInterface({
 rl.question('enter word to find anagrams:', function (word) {
   console.log(`anagrams of ${word}:`);
 
-  // match this
-  let sortedWord = word.split('').sort().join('');
-
-  let anagram = new Anagram('../dictionary3.txt');
-  const dictionary = anagram.loadDictionaryIntoArray();
-  let sortedDictionary = anagram.iterateDictionaryAndSort(dictionary);
-  let anagrams = sortedDictionary.get(sortedWord);
+  let anagram = new Anagram('../dictionary.test.txt');
+  let anagrams = anagram.findAnagrams(word);
 
   // return anagrams if found
   if(anagrams) console.log(anagrams);
