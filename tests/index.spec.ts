@@ -40,4 +40,8 @@ describe("should find anagram", () => {
   it('gets cinema for iceman', () => {
     expect(anagram.findAnagrams('iceman')).toContain('cinema');
   });
+
+  it('gets iceman for cinema', () => {
+    expect(anagram.findAnagrams('cinema')).toContain('iceman');
+  });
 });

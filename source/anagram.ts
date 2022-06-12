@@ -43,8 +43,8 @@ export class Anagram {
     let delimeter: string = '';
     
     dictionary.forEach(word => {
-      let preExistingWord = this.sortedDictionary.get(this.sortWord(word)); // check if pre-existing key
       let sortedWordKey = this.sortWord(word);
+      let preExistingWord = this.sortedDictionary.get(sortedWordKey); // check if pre-existing key
 
       let commaSeperatedWords;
       if(preExistingWord) { commaSeperatedWords = preExistingWord + delimeter + word; }
