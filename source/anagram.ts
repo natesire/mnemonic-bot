@@ -31,14 +31,18 @@ export class Anagram {
 
   // sorts the entire file and stores it in a hash map
   sortDictionaryWordsIntoHashMap(dictionary: string[]) : Map<string, string> { // array passed by reference
+    // set once for the loop to prevent leading commas
     let delimeter: string = '';
 
     dictionary.forEach(word => {
-      //let sortedWordKey = this.sortWord(word);
-      let sortedWordKey = this.sortWord(word);
-      let preExistingWord = this.sortedDictionary.get(sortedWordKey); // check if pre-existing key
-
       let commaSeperatedWords = '';
+
+      // will compare words by sorting each char in ascending order
+      let sortedWordKey = this.sortWord(word);
+
+      // check if pre-existing key to prevent duplciates
+      let preExistingWord = this.sortedDictionary.get(sortedWordKey); 
+
       if(preExistingWord) { commaSeperatedWords = preExistingWord + delimeter; }
       commaSeperatedWords = commaSeperatedWords + word; 
 
@@ -55,6 +59,7 @@ export class Anagram {
   }
   
   // ascending order, a to z
+  // can try quick sort or radix sort for longer words
   sortWord(word: string) {
     return word.split('').sort().join(''); 
   }
