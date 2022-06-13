@@ -2,6 +2,8 @@
 
 ```cd source```
 
+This test step also compiles the code for node. Not the exe. Read below for exe instructions.
+
 ```npm test```
 
 ```node ./index.js```
