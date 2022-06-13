@@ -34,6 +34,7 @@ export class Anagram {
     // set once for the loop to prevent leading commas
     let delimeter: string = '';
 
+    // node js doesn't have tail call recursion so we use a loop
     dictionary.forEach(word => {
       let commaSeperatedWords = '';
 
