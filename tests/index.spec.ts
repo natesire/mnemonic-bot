@@ -20,12 +20,6 @@ describe("should find anagram", () => {
     expect(dictionary).toContain('iceman'); 
   });
 
-  /*it('should load dictionary into redis', async () => {
-    const dictionary = anagram.loadDictionaryIntoArray();
-    await anagram.sortDictionaryWordsIntoRedis(dictionary);
-    expect(await anagram.getAnagrams('iceman')).toContain('cinema');
-  });*/
-
   // test the final result is less brittle
   it('gets cinema for iceman', async () => {
     expect(await anagram.findAnagrams('iceman')).toContain('cinema');
@@ -36,19 +30,19 @@ describe("should find anagram", () => {
   });
 
   it('set and get cinema', async () => {
-    await anagram.setAnagrams('cinema', 'test');
-    expect(await anagram.getAnagrams('cinema')).toContain('test');
+    await anagram.setAnagrams('test', 'test');
+    expect(await anagram.getAnagrams('test')).toContain('test');
   });
 
-  it('prevents duplicate values', async () => {
-    await anagram.sortDictionaryWordsIntoRedis(['iceman', 'cinema']);
-    await anagram.sortDictionaryWordsIntoRedis(['iceman', 'cinema']);
-    expect(await anagram.getAnagrams('iceman')).toEqual(['cinema']);
+  it('dup word', async () => {
+    expect(anagram.filterDups('stop', 'stop,pots')).toEqual('');
   });
 
-  it('prevents duplicate values', async () => {
-    await anagram.sortDictionaryWordsIntoRedis(['iceman', 'cinema']);
-    await anagram.sortDictionaryWordsIntoRedis(['iceman', 'cinema']);
-    expect(await anagram.getAnagrams('cinema')).toEqual(['iceman']);
+  it('dup word', async () => {
+    expect(anagram.filterDups('pots', 'stop,pots')).toEqual('');
+  });
+
+  it('non dup word', async () => {
+    expect(anagram.filterDups('pota', 'stop,pots')).toEqual(',pota');
   });
 });

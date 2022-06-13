@@ -24,30 +24,25 @@ export class Anagram {
 
   async setup() {
     await this.client.connect();
-    //await this.client.flushdb();
     let dictionaryArr = this.loadDictionaryIntoArray();
     this.sortedDictionary = await this.sortDictionaryWordsIntoRedis(dictionaryArr);
   }
 
-  async getAnagrams(word: string) : Promise<string> {
-    // client is already connected
-    //try { this.client.connect(); } catch(err) { console.log(err); }
-    return await this.client.get(word);
+  async getAnagrams(sortedWordKey: string) : Promise<string> {
+    let anagramsVal = await this.client.get(sortedWordKey);
+    console.log(`${sortedWordKey} => ${anagramsVal}`);
+    return anagramsVal;
   }
 
   async setAnagrams(wordKey: string, anagramsCommaSeperated: string) {
-    // validate letters only
-    if(wordKey.match(/^[a-z]+$/i) && anagramsCommaSeperated.match(/^[a-z]+\,?$/i)) {
-      //try { this.client.connect(); } catch(err) { console.log(err); }
-      await this.client.set(wordKey, anagramsCommaSeperated);
-      return true;
-    }
-    throw new Error(`Invalid: key ${wordKey} value: ${anagramsCommaSeperated}`);
+    await this.client.set(wordKey, ''); // prevents duplicates
+    await this.client.set(wordKey, anagramsCommaSeperated);
+    return true;
   }
 
-  async findAnagrams(word: string) : Promise<string> {
-    let sortedWord = this.sortWord(word);
-    let anagrams = await this.getAnagrams(sortedWord);
+  async findAnagrams(wordKey: string) : Promise<string> {
+    let sortedWordKey = this.sortWord(wordKey);
+    let anagrams = await this.getAnagrams(sortedWordKey);
     return anagrams;
   }
 
@@ -56,34 +51,13 @@ export class Anagram {
     return dictionary;
   }
 
-  // sorts the entire file and stores it in a hash map
-  sortDictionaryWordsIntoHashMap(dictionary: string[]) : Map<string, string> { // array passed by reference
-    // set once for the loop to prevent leading commas
-    let delimeter: string = '';
-
-    // node js doesn't have tail call recursion so we use a loop
-    dictionary.forEach(word => {
-      let commaSeperatedWords = '';
-
-      // will compare words by sorting each char in ascending order
-      let sortedWordKey = this.sortWord(word);
-
-      // check if pre-existing key to prevent duplciates
-      let preExistingWord = this.sortedDictionary.get(sortedWordKey); 
-
-      if(preExistingWord) { commaSeperatedWords = preExistingWord + delimeter; }
-      commaSeperatedWords = commaSeperatedWords + word; 
-
-      // add anagram to hash map
-      // lower case prevents accidental duplicates and matches command line input
-      if(sortedWordKey && commaSeperatedWords) {
-        let sortedWordKeyLowerCase = sortedWordKey.toLowerCase();
-        let commaSeperatedWordsLowerCase = commaSeperatedWords.toLowerCase();
-        this.sortedDictionary.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
-      }
-      delimeter = ',';
-    });
-    return this.sortedDictionary;
+  filterDups(addWord: string, preWords: string) {
+    let result = '';
+    if(preWords.indexOf(`${addWord},`) === -1 && preWords.indexOf(`,${addWord}`) === -1) {
+      if(preWords) result = ',';
+      result = result + `${addWord}`;
+    }
+    return result;
   }
 
   // sorts the entire file and stores it in a hash map
@@ -94,30 +68,14 @@ export class Anagram {
     // node js doesn't have tail call recursion so we use a loop
     //dictionary.forEach(word => {
     for(let word of dictionary) {
-      let commaSeperatedWords = '';
-
       // will compare words by sorting each char in ascending order
       let sortedWordKey = this.sortWord(word);
+      let preExistingWordsInValue = await this.getAnagrams(sortedWordKey);
+      //let preExistingWordsInValue = '';
+      await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.filterDups(word,preExistingWordsInValue));
 
-      // check if pre-existing key to prevent duplicates
-      let preExistingWord = await this.getAnagrams(sortedWordKey);
-
-      console.log(`preExistingWord: ${preExistingWord}`);
-      console.log('word: ' + word);
-      if(preExistingWord) { commaSeperatedWords = preExistingWord + delimeter; }
-      commaSeperatedWords = commaSeperatedWords + word; 
-
-      // add anagram to hash map
-      // lower case prevents accidental duplicates and matches command line input
-      if(sortedWordKey && commaSeperatedWords) {
-        let sortedWordKeyLowerCase = sortedWordKey.toLowerCase();
-        let commaSeperatedWordsLowerCase = commaSeperatedWords.toLowerCase();
-        //this.sortedDictionary.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
-        await this.client.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
-      }
       delimeter = ',';
     }
-    //return this.sortedDictionary;
   }
   
   // ascending order, a to z
