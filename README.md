@@ -24,7 +24,7 @@ And run the appropriate exe depending on your system. There are executables for 
 
 ```./anagram-win.exe```
 
-# How to compile with pkg
+# How to compile with pkg to make a cross platform exe
 
 ```npm install --global pkg```
 
@@ -42,7 +42,11 @@ Install node for windows
 
 https://nodejs.org/en/download/
 
-# directions followed
+# Optional - Redis Setup for MicroService
+
+
+
+# original directions followed
 
 Anagram Finder
 
