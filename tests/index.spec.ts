@@ -4,8 +4,9 @@ describe("should find anagram", () => {
 
   let anagram: Anagram;
 
-  beforeAll(() => {
-    anagram = new Anagram('dictionary.txt');
+  beforeAll(async () => {
+    anagram = new Anagram('dictionary.test.txt');
+    await anagram.setup();
   });
 
   it('should throw error if file does not exist', () => {
@@ -14,17 +15,40 @@ describe("should find anagram", () => {
     }).toThrowError('File not found!');
   });
 
-  it('should load dictionary', () => {
+  it('should load dictionary into array', () => {
     const dictionary = anagram.loadDictionaryIntoArray();
-    expect(dictionary).toContain('iceman'); // normalize all to lower case
+    expect(dictionary).toContain('iceman'); 
   });
+
+  /*it('should load dictionary into redis', async () => {
+    const dictionary = anagram.loadDictionaryIntoArray();
+    await anagram.sortDictionaryWordsIntoRedis(dictionary);
+    expect(await anagram.getAnagrams('iceman')).toContain('cinema');
+  });*/
 
   // test the final result is less brittle
-  it('gets cinema for iceman', () => {
-    expect(anagram.findAnagrams('iceman')).toContain('cinema');
+  it('gets cinema for iceman', async () => {
+    expect(await anagram.findAnagrams('iceman')).toContain('cinema');
   });
 
-  it('gets iceman for cinema', () => {
-    expect(anagram.findAnagrams('cinema')).toContain('iceman');
+  it('gets iceman for cinema', async () => {
+    expect(await anagram.findAnagrams('cinema')).toContain('iceman');
+  });
+
+  it('set and get cinema', async () => {
+    await anagram.setAnagrams('cinema', 'test');
+    expect(await anagram.getAnagrams('cinema')).toContain('test');
+  });
+
+  it('prevents duplicate values', async () => {
+    await anagram.sortDictionaryWordsIntoRedis(['iceman', 'cinema']);
+    await anagram.sortDictionaryWordsIntoRedis(['iceman', 'cinema']);
+    expect(await anagram.getAnagrams('iceman')).toEqual(['cinema']);
+  });
+
+  it('prevents duplicate values', async () => {
+    await anagram.sortDictionaryWordsIntoRedis(['iceman', 'cinema']);
+    await anagram.sortDictionaryWordsIntoRedis(['iceman', 'cinema']);
+    expect(await anagram.getAnagrams('cinema')).toEqual(['iceman']);
   });
 });
