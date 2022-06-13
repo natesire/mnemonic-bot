@@ -11,20 +11,19 @@ const rl = readline.createInterface({
 
 var waitForUserInput = function(anagram, anagrams) {
   rl.question("AnagramFinder> ", function(word, anagramInst) {
-    
     let timeThree = time();
-    anagrams = anagram.findAnagrams(word);
-    let timeFour = time();
-    let timeDiff = timeFour - timeThree;
+    anagram.findAnagrams(word).then(function(anagrams) {
+      let timeFour = time();
+      let timeDiff = timeFour - timeThree;
 
-    // count the number of anagrams
-    let anagramCount = anagrams.split(',').length;
+      // count the number of anagrams
+      let anagramCount = anagrams?.split(',').length;
 
-    // return anagrams if found
-    if(anagrams) { console.log(`${anagramCount} Anagrams found for ${word} in ${timeDiff} ms`); }
-    if(anagrams) console.log(anagrams);
-    if(anagrams === undefined) console.log(`No anagrams found for ${word} in ${timeDiff} ms`);
-    
+      // return anagrams if found
+      if(anagrams) { console.log(`${anagramCount} Anagrams found for ${word} in ${timeDiff} ms`); }
+      if(anagrams) console.log(anagrams);
+      if(anagrams === undefined) console.log(`No anagrams found for ${word} in ${timeDiff} ms`);
+    });
     if (word == "exit") {
         rl.close();
     } else {
@@ -34,15 +33,16 @@ var waitForUserInput = function(anagram, anagrams) {
   });
 }
 
-function loadDictionary() {
+function setup() {
   let timeOne = time();
   let anagramInst = new Anagram('../dictionary.txt');
+  anagramInst.setup();
   let timeTwo = time();
   console.log(`Dictionary loaded in ${timeTwo - timeOne} ms`);
   return anagramInst;
 }
 
-let anagramInstance = loadDictionary();
+let anagramInstance = setup();
 waitForUserInput(anagramInstance, '');
 
 // time profile the code

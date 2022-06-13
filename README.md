@@ -44,6 +44,8 @@ https://nodejs.org/en/download/
 
 # Optional - Redis Setup for MicroService
 
+https://www.npmjs.com/package/redis
+
 
 
 # original directions followed
