@@ -10,25 +10,17 @@ export class Anagram {
   constructor(public dictionaryFile: string) {
     this.dictionaryFile = dictionaryFile; // loads dictionary file
     this.sortedDictionary = new Map();    // hash map to store sorted words
-
     // validations here to keep the code clean
     if (!fs.existsSync(this.dictionaryFile)) {
       throw new Error('File not found!');
     }
-
-    let timeOne = this.time();
-    this.dictionaryArr = this.loadDictionaryIntoArray();
-    let timeTwo = this.time();
-    console.log(`time taken to load dictionary: ${timeTwo - timeOne} milliseconds`);
+    let dictionaryArr = this.loadDictionaryIntoArray();
+    this.sortedDictionary = this.sortDictionaryWordsIntoHashMap(dictionaryArr);
   }
 
   findAnagrams(word: string) {
-    let timeOne = this.time();
     let sortedWord = this.sortWord(word);
-    let sortedDictionary = this.sortDictionaryWords(this.dictionaryArr);
-    let anagrams = sortedDictionary.get(sortedWord);
-    let timeTwo = this.time();
-    console.log(`time taken for anagram: ${timeTwo - timeOne} milliseconds`);
+    let anagrams = this.sortedDictionary.get(sortedWord);
     return anagrams;
   }
 
@@ -38,9 +30,8 @@ export class Anagram {
   }
 
   // sorts the entire file and stores it in a hash map
-  sortDictionaryWords(dictionary: string[]) : Map<string, string> { // array passed by reference
+  sortDictionaryWordsIntoHashMap(dictionary: string[]) : Map<string, string> { // array passed by reference
     let delimeter: string = '';
-    let i = 0;
 
     dictionary.forEach(word => {
       //let sortedWordKey = this.sortWord(word);
@@ -58,19 +49,13 @@ export class Anagram {
         let commaSeperatedWordsLowerCase = commaSeperatedWords.toLowerCase();
         this.sortedDictionary.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
       }
-      i++;
       delimeter = ',';
     });
-    console.log(`count: ${i}`);
     return this.sortedDictionary;
   }
   
   // ascending order, a to z
   sortWord(word: string) {
     return word.split('').sort().join(''); 
-  }
-
-  time() {
-    return new Date().getTime();
   }
 }

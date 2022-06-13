@@ -1,3 +1,11 @@
+# Easiest way to run for development
+
+```cd source```
+
+```npm test```
+
+```node ./index.js```
+
 # Run v1.0
 
 Go to this folder
