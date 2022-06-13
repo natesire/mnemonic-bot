@@ -43,6 +43,7 @@ export class Anagram {
     let i = 0;
 
     dictionary.forEach(word => {
+      //let sortedWordKey = this.sortWord(word);
       let sortedWordKey = this.sortWord(word);
       let preExistingWord = this.sortedDictionary.get(sortedWordKey); // check if pre-existing key
 
@@ -63,10 +64,7 @@ export class Anagram {
     console.log(`count: ${i}`);
     return this.sortedDictionary;
   }
-
-  // quicksort on a one word string
-  // sortWordQuick(word: string) { 
-
+  
   // ascending order, a to z
   sortWord(word: string) {
     return word.split('').sort().join(''); 

@@ -16,13 +16,10 @@ describe("should find anagram", () => {
 
   it('should load dictionary', () => {
     const dictionary = anagram.loadDictionaryIntoArray();
-    expect(dictionary).toContain('Aaron'); // normalize all to lower case
-  });
-  
-  it('should sort word', () => {
-    expect(anagram.sortWord('aardwolf')).toEqual('aadflorw');
+    expect(dictionary).toContain('iceman'); // normalize all to lower case
   });
 
+  // test the final result is less brittle
   it('gets cinema for iceman', () => {
     expect(anagram.findAnagrams('iceman')).toContain('cinema');
   });
