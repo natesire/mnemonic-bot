@@ -99,10 +99,11 @@ export class Anagram {
       // will compare words by sorting each char in ascending order
       let sortedWordKey = this.sortWord(word);
 
-      // check if pre-existing key to prevent duplciates
-      //let preExistingWord = this.sortedDictionary.get(sortedWordKey); 
+      // check if pre-existing key to prevent duplicates
       let preExistingWord = await this.getAnagrams(sortedWordKey);
 
+      console.log(`preExistingWord: ${preExistingWord}`);
+      console.log('word: ' + word);
       if(preExistingWord) { commaSeperatedWords = preExistingWord + delimeter; }
       commaSeperatedWords = commaSeperatedWords + word; 
 

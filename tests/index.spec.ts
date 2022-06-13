@@ -39,4 +39,16 @@ describe("should find anagram", () => {
     await anagram.setAnagrams('cinema', 'test');
     expect(await anagram.getAnagrams('cinema')).toContain('test');
   });
+
+  it('prevents duplicate values', async () => {
+    await anagram.sortDictionaryWordsIntoRedis(['iceman', 'cinema']);
+    await anagram.sortDictionaryWordsIntoRedis(['iceman', 'cinema']);
+    expect(await anagram.getAnagrams('iceman')).toEqual(['cinema']);
+  });
+
+  it('prevents duplicate values', async () => {
+    await anagram.sortDictionaryWordsIntoRedis(['iceman', 'cinema']);
+    await anagram.sortDictionaryWordsIntoRedis(['iceman', 'cinema']);
+    expect(await anagram.getAnagrams('cinema')).toEqual(['iceman']);
+  });
 });
