@@ -1,7 +1,4 @@
 import fs from 'fs';    // use this for esmodules and typescript
-import { createClient } from 'redis';
-//const fs = require('fs'); // needed for exe compiling
-//const createClient = require('redis').createClient;
 
 // find all anagrams in a dictionary
 export class Anagram {
@@ -17,30 +14,22 @@ export class Anagram {
     if (!fs.existsSync(this.dictionaryFile)) {
       throw new Error('File not found!');
     }
-
-    this.client = createClient();
-    this.client.on('error', (err) => console.log('Redis Client Error', err));
-    //this.client.connect();
   }
 
   async setup() {
-    await this.client.connect();
-    //await this.client.flushdb();
+    this.sortedDictionary = new Map();
     let dictionaryArr = this.loadDictionaryIntoArray();
-    this.sortedDictionary = await this.sortDictionaryWordsIntoRedis(dictionaryArr);
+    this.sortedDictionary = await this.sortDictionaryWordsIntoHashMap(dictionaryArr);
   }
 
   async getAnagrams(word: string) : Promise<string> {
-    // client is already connected
-    //try { this.client.connect(); } catch(err) { console.log(err); }
-    return await this.client.get(word);
+    return this.sortedDictionary?.get(word);
   }
 
   async setAnagrams(wordKey: string, anagramsCommaSeperated: string) {
     // validate letters only
     if(wordKey.match(/^[a-z]+$/i) && anagramsCommaSeperated.match(/^[a-z]+\,?$/i)) {
-      //try { this.client.connect(); } catch(err) { console.log(err); }
-      await this.client.set(wordKey, anagramsCommaSeperated);
+      this.sortedDictionary.set(wordKey, anagramsCommaSeperated);
       return true;
     }
     throw new Error(`Invalid: key ${wordKey} value: ${anagramsCommaSeperated}`);
@@ -70,7 +59,7 @@ export class Anagram {
       let sortedWordKey = this.sortWord(word);
 
       // check if pre-existing key to prevent duplciates
-      let preExistingWord = this.sortedDictionary.get(sortedWordKey); 
+      let preExistingWord = this.sortedDictionary?.get(sortedWordKey); 
 
       if(preExistingWord) { commaSeperatedWords = preExistingWord + delimeter; }
       commaSeperatedWords = commaSeperatedWords + word; 
@@ -80,7 +69,7 @@ export class Anagram {
       if(sortedWordKey && commaSeperatedWords) {
         let sortedWordKeyLowerCase = sortedWordKey.toLowerCase();
         let commaSeperatedWordsLowerCase = commaSeperatedWords.toLowerCase();
-        this.sortedDictionary.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
+        this.sortedDictionary?.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
       }
       delimeter = ',';
     });
@@ -103,8 +92,6 @@ export class Anagram {
       // check if pre-existing key to prevent duplicates
       let preExistingWord = await this.getAnagrams(sortedWordKey);
 
-      console.log(`preExistingWord: ${preExistingWord}`);
-      console.log('word: ' + word);
       if(preExistingWord) { commaSeperatedWords = preExistingWord + delimeter; }
       commaSeperatedWords = commaSeperatedWords + word; 
 
@@ -114,7 +101,7 @@ export class Anagram {
         let sortedWordKeyLowerCase = sortedWordKey.toLowerCase();
         let commaSeperatedWordsLowerCase = commaSeperatedWords.toLowerCase();
         //this.sortedDictionary.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
-        await this.client.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
+        await this.sortedDictionary?.set(sortedWordKeyLowerCase, commaSeperatedWordsLowerCase);
       }
       delimeter = ',';
     }
