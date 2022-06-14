@@ -42,5 +42,8 @@
   "dependencies": {
     "pkg": "^5.7.0",
     "redis": "^4.1.0"
+  },
+  "pkg": {
+    "options": ["experimental-modules"]
   }
 }

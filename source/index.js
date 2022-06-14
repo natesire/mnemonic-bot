@@ -1,10 +1,10 @@
 #!/usr/bin/node
 
-//import { Anagram } from '../dist/source/anagram.js';
-//import readline from 'readline';
+import { Anagram } from '../dist/source/anagram.js';
+import readline from 'readline';
 
-const Anagram = require('../dist/source/anagram.js');
-const readline = require('readline');
+//const Anagram = require('../dist/source/anagram.js');
+//const readline = require('readline');
 
 const rl = readline.createInterface({
   input: process.stdin,

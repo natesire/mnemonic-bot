@@ -1,6 +1,7 @@
-//import fs from 'fs';    // use this for esmodules and typescript
-const fs = require('fs'); // needed for exe compiling
-const createClient = require('redis').createClient;
+import fs from 'fs';    // use this for esmodules and typescript
+import { createClient } from 'redis';
+//const fs = require('fs'); // needed for exe compiling
+//const createClient = require('redis').createClient;
 
 // find all anagrams in a dictionary
 export class Anagram {
