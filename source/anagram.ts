@@ -10,7 +10,6 @@ export class Anagram {
   
   constructor(public dictionaryFile: string) {
     this.dictionaryFile = dictionaryFile; // loads dictionary file
-    //this.sortedDictionary = new Map();    // hash map to store sorted words
     // validations here to keep the code clean
     if (!fs.existsSync(this.dictionaryFile)) {
       throw new Error('File not found!');
@@ -32,7 +31,7 @@ export class Anagram {
   }
 
   async setAnagrams(wordKey: string, anagramsCommaSeperated: string) {
-    await this.client.set(wordKey, ''); // prevents duplicates
+    //await this.client.set(wordKey, '1'); // prevents duplicates
     await this.client.set(wordKey, anagramsCommaSeperated);
     return true;
   }
@@ -50,7 +49,7 @@ export class Anagram {
 
   filterDups(addWord: string, preWords: string) {
     let result = '';
-    if(preWords?.indexOf(`${addWord},`) === -1 && preWords?.indexOf(`,${addWord}`) === -1) {
+    if(preWords.indexOf(`${addWord},`) === -1 && preWords.indexOf(`,${addWord}`) === -1) {
       if(preWords) result = ',';
       result = result + `${addWord}`;
     }
@@ -59,18 +58,12 @@ export class Anagram {
 
   // sorts the entire file and stores it in a hash map
   async sortDictionaryWordsIntoRedis(dictionary: string[]) { // array passed by reference
-    // set once for the loop to prevent leading commas
-    let delimeter: string = '';
-
     // node js doesn't have tail call recursion so we use a loop
-    //dictionary.forEach(word => {
     for(let word of dictionary) {
       // will compare words by sorting each char in ascending order
       let sortedWordKey = this.sortWord(word);
       let preExistingWordsInValue = await this.getAnagrams(sortedWordKey);
       await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.filterDups(word,preExistingWordsInValue));
-
-      delimeter = ',';
     }
   }
   
