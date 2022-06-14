@@ -31,8 +31,11 @@ export class Anagram {
   }
 
   async setAnagrams(wordKey: string, anagramsCommaSeperated: string) {
-    //await this.client.set(wordKey, '1'); // prevents duplicates
-    await this.client.set(wordKey, anagramsCommaSeperated);
+    //remove duplicates
+    let anagrams = anagramsCommaSeperated.split(',');
+    let uniqueAnagrams = [...new Set(anagrams)];
+    let uniqueAnagramsCommaSeperated = uniqueAnagrams.join(',');
+    await this.client.set(wordKey, uniqueAnagramsCommaSeperated);
     return true;
   }
 
@@ -53,7 +56,18 @@ export class Anagram {
       if(preWords) result = ',';
       result = result + `${addWord}`;
     }
+
+    // validate
+    this.validateWord(result);
+
     return result;
+  }
+
+  validateWord(word: string) {
+    if(word.match(/([a-z]+,?)+/)) {
+      return true;
+    }
+    return false;
   }
 
   // sorts the entire file and stores it in a hash map
