@@ -1,5 +1,5 @@
-import fs from 'fs';    // use this for esmodules and typescript
-//const fs = require('fs'); // needed for exe compiling
+//import fs from 'fs';    // use this for esmodules and typescript
+const fs = require('fs'); // needed for exe compiling
 
 // find all anagrams in a dictionary
 export class Anagram {
