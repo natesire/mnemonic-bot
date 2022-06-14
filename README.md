@@ -8,23 +8,9 @@ This test step also compiles the code for node. Not the exe. Read below for exe 
 
 ```node ./index.js```
 
-# Run v1.0
+# Experimental - How to compile with pkg to make a cross platform exe
 
-Go to this folder
-
-```cd ./anagram/compile-v1```
-
-And run the appropriate exe depending on your system. There are executables for windows, linux and mac.
-
-```./anagram-win.exe```
-
-# Run v2.0
-
-```cd ./anagram/compile-v2/```
-
-```./anagram-win.exe```
-
-# How to compile with pkg to make a cross platform exe
+pkg is having trouble with the new es6 modules.
 
 ```npm install --global pkg```
 
