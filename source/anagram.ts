@@ -30,7 +30,6 @@ export class Anagram {
 
   async getAnagrams(sortedWordKey: string) : Promise<string> {
     let anagramsVal = await this.client.get(sortedWordKey);
-    console.log(`${sortedWordKey} => ${anagramsVal}`);
     return anagramsVal;
   }
 
@@ -53,7 +52,7 @@ export class Anagram {
 
   filterDups(addWord: string, preWords: string) {
     let result = '';
-    if(preWords.indexOf(`${addWord},`) === -1 && preWords.indexOf(`,${addWord}`) === -1) {
+    if(preWords?.indexOf(`${addWord},`) === -1 && preWords?.indexOf(`,${addWord}`) === -1) {
       if(preWords) result = ',';
       result = result + `${addWord}`;
     }

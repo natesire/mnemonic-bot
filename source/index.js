@@ -7,11 +7,16 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-
-
 var waitForUserInput = function(anagram, anagrams) {
   rl.question("AnagramFinder> ", function(word, anagramInst) {
     let timeThree = time();
+
+    if(word == 'exit') {
+      rl.close();
+      process.exit([0]);
+      return;
+    }
+
     anagram.findAnagrams(word).then(function(anagrams) {
       let timeFour = time();
       let timeDiff = timeFour - timeThree;
@@ -23,13 +28,9 @@ var waitForUserInput = function(anagram, anagrams) {
       if(anagrams) { console.log(`${anagramCount} Anagrams found for ${word} in ${timeDiff} ms`); }
       if(anagrams) console.log(anagrams);
       if(anagrams === undefined) console.log(`No anagrams found for ${word} in ${timeDiff} ms`);
-    });
-    if (word == "exit") {
-        rl.close();
-    } else {
-      // treat as singleton
+
       waitForUserInput(anagram, ''); // does not add to the call stack
-    }
+    });
   });
 }
 
