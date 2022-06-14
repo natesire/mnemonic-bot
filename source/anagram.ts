@@ -31,12 +31,12 @@ export class Anagram {
   }
 
   async setAnagrams(wordKey: string, anagramsCommaSeperated: string) {
-    //remove duplicates
     let anagrams = anagramsCommaSeperated.split(',');
-    let uniqueAnagrams = [...new Set(anagrams)];
-    let uniqueAnagramsCommaSeperated = uniqueAnagrams.join(',');
-    await this.client.set(wordKey, uniqueAnagramsCommaSeperated);
-    return true;
+    let cleaned = anagrams.filter((item) => item.match(/^[a-z]+/));
+    let uniqueAnagrams = [...new Set(cleaned)];
+    let anagramsUniqueCommaSeperated = uniqueAnagrams.join(',');
+
+    await this.client.set(wordKey, anagramsUniqueCommaSeperated);
   }
 
   async findAnagrams(wordKey: string) : Promise<string> {
@@ -55,16 +55,21 @@ export class Anagram {
     if(preWords.indexOf(`${addWord},`) === -1 && preWords.indexOf(`,${addWord}`) === -1) {
       if(preWords) result = ',';
       result = result + `${addWord}`;
+      return result;
     }
 
-    // validate
-    this.validateWord(result);
-
-    return result;
+    return '';
   }
 
-  validateWord(word: string) {
-    if(word.match(/([a-z]+,?)+/)) {
+  validateAlpha(word: string) {
+    if(word.match(/^[a-z]+$/)) {
+      return true;
+    }
+    return false;
+  }
+
+  validateValues(word: string) {
+    if(word.match(/^[a-z]+,?$/)) {
       return true;
     }
     return false;
@@ -77,8 +82,17 @@ export class Anagram {
       // will compare words by sorting each char in ascending order
       let sortedWordKey = this.sortWord(word);
       let preExistingWordsInValue = await this.getAnagrams(sortedWordKey);
-      await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.filterDups(word,preExistingWordsInValue));
+
+      //clear the db
+      //await this.client.del(sortedWordKey);
+      //preExistingWordsInValue = '';
+
+      await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.comma(word));
     }
+  }
+
+  comma(word: string) {
+    if(word) return `,${word}`;
   }
   
   // ascending order, a to z
