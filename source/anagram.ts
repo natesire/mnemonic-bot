@@ -1,7 +1,5 @@
-//import fs from 'fs';    // use this for esmodules and typescript
-//import { createClient } from 'redis';
-const fs = require('fs'); // needed for exe compiling
-const { createClient } = require('redis');
+import fs from 'fs';    // use this for esmodules and typescript
+import { createClient } from 'redis';
 
 // find all anagrams in a dictionary
 export class Anagram {
@@ -20,7 +18,6 @@ export class Anagram {
 
     this.client = createClient();
     this.client.on('error', (err) => console.log('Redis Client Error', err));
-    //this.client.connect();
   }
 
   async setup() {
@@ -71,7 +68,6 @@ export class Anagram {
       // will compare words by sorting each char in ascending order
       let sortedWordKey = this.sortWord(word);
       let preExistingWordsInValue = await this.getAnagrams(sortedWordKey);
-      //let preExistingWordsInValue = '';
       await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.filterDups(word,preExistingWordsInValue));
 
       delimeter = ',';
