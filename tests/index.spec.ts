@@ -21,6 +21,7 @@ describe("should find anagram", () => {
   });
 
   // test the final result is less brittle
+
   it('gets cinema for iceman', async () => {
     expect(await anagram.findAnagrams('iceman')).toContain('cinema');
   });
@@ -29,20 +30,7 @@ describe("should find anagram", () => {
     expect(await anagram.findAnagrams('cinema')).toContain('iceman');
   });
 
-  it('set and get cinema', async () => {
-    await anagram.setAnagrams('test', 'test');
-    expect(await anagram.getAnagrams('test')).toContain('test');
-  });
-
-  it('dup word', async () => {
-    expect(anagram.filterDups('stop', 'stop,pots')).toEqual('');
-  });
-
-  it('dup word', async () => {
-    expect(anagram.filterDups('pots', 'stop,pots')).toEqual('');
-  });
-
-  it('non dup word', async () => {
-    expect(anagram.filterDups('pota', 'stop,pots')).toEqual(',pota');
+  it('validate word', async () => {
+    expect(anagram.validateAlpha('[object promise]')).toEqual(false);
   });
 });

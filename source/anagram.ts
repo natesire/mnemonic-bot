@@ -27,7 +27,13 @@ export class Anagram {
 
   async getAnagrams(sortedWordKey: string) : Promise<string> {
     let anagramsVal = await this.client.get(sortedWordKey);
-    return anagramsVal;
+
+    //self correcting, remove [object promise]
+    let anagramsCleaned = anagramsVal.split(',').filter((item) => item.match(/^[a-z]+/));
+
+    let anagramsWithCommas = anagramsCleaned.join(',');
+
+    return anagramsWithCommas;
   }
 
   async setAnagrams(wordKey: string, anagramsCommaSeperated: string) {
@@ -48,17 +54,6 @@ export class Anagram {
   loadDictionaryIntoArray(): string[] {
     var dictionary: string[] = fs.readFileSync(this.dictionaryFile, 'utf8').split('\r\n');
     return dictionary;
-  }
-
-  filterDups(addWord: string, preWords: string) {
-    let result = '';
-    if(preWords.indexOf(`${addWord},`) === -1 && preWords.indexOf(`,${addWord}`) === -1) {
-      if(preWords) result = ',';
-      result = result + `${addWord}`;
-      return result;
-    }
-
-    return '';
   }
 
   validateAlpha(word: string) {
@@ -82,11 +77,6 @@ export class Anagram {
       // will compare words by sorting each char in ascending order
       let sortedWordKey = this.sortWord(word);
       let preExistingWordsInValue = await this.getAnagrams(sortedWordKey);
-
-      //clear the db
-      //await this.client.del(sortedWordKey);
-      //preExistingWordsInValue = '';
-
       await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.comma(word));
     }
   }
