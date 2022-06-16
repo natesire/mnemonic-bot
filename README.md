@@ -37,7 +37,3 @@ https://www.npmjs.com/package/redis
 # Troubleshooting
 
 make sure the jest config file uses es modules and not module.exports = {}
-
-# Time Taken
-
-1 hour to setup the project for typescript, jest and es6 modules. Did it manually. Could have used yeoman or scaffolding like Rails provides.
