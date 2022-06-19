@@ -20,7 +20,7 @@
   },
   "scripts": {
     "pretest": "rimraf ./dist",
-    "test": "tsc --p ./tsconfig.json && cross-env NODE_OPTIONS=--experimental-vm-modules jest --maxWorkers=4 --coverage ./dist/tests/",
+    "test": "tsc --p ./tsconfig.json && cross-env NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles --maxWorkers=4 --coverage ./dist/tests/",
     "test-watch": "tsc-watch --onSuccess tsc && \"cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage && rimraf ./tsdist\""
   },
   "repository": {

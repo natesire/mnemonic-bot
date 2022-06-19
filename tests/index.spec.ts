@@ -9,6 +9,10 @@ describe("should find anagram", () => {
     await anagram.setup();
   });
 
+  afterAll(async () => {
+    await anagram.close();
+  });
+
   it('should throw error if file does not exist', () => {
     expect(() => {
       new Anagram('/path/to/file/that/does/not/exist.txt');
@@ -45,4 +49,6 @@ describe("should find anagram", () => {
   it('non dup word', async () => {
     expect(anagram.filterDups('pota', 'stop,pots')).toEqual(',pota');
   });
+
+  
 });

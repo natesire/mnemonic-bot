@@ -1,6 +1,7 @@
 import fs from 'fs';    // use this for esmodules and typescript
 import { createClient } from 'redis';
 //const fs = require('fs'); // needed for exe compiling
+import worker from 'worker_threads';
 
 // find all anagrams in a dictionary
 export class Anagram {
@@ -19,7 +20,10 @@ export class Anagram {
 
     this.client = createClient();
     this.client.on('error', (err) => console.log('Redis Client Error', err));
-    //this.client.connect();
+  }
+
+  async close() {
+    this.client.quit();
   }
 
   async setup() {
