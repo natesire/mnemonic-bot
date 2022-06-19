@@ -12,7 +12,6 @@ export class Anagram {
   
   constructor(public dictionaryFile: string) {
     this.dictionaryFile = dictionaryFile; // loads dictionary file
-    //this.sortedDictionary = new Map();    // hash map to store sorted words
     // validations here to keep the code clean
     if (!fs.existsSync(this.dictionaryFile)) {
       throw new Error('File not found!');
@@ -34,13 +33,22 @@ export class Anagram {
 
   async getAnagrams(sortedWordKey: string) : Promise<string> {
     let anagramsVal = await this.client.get(sortedWordKey);
-    return anagramsVal;
+
+    //self correcting, remove [object promise]
+    let anagramsCleaned = anagramsVal.split(',').filter((item) => item.match(/^[a-z]+/));
+
+    let anagramsWithCommas = anagramsCleaned.join(',');
+
+    return anagramsWithCommas;
   }
 
   async setAnagrams(wordKey: string, anagramsCommaSeperated: string) {
-    await this.client.set(wordKey, ''); // prevents duplicates
-    await this.client.set(wordKey, anagramsCommaSeperated);
-    return true;
+    let anagrams = anagramsCommaSeperated.split(',');
+    let cleaned = anagrams.filter((item) => item.match(/^[a-z]+/));
+    let uniqueAnagrams = [...new Set(cleaned)];
+    let anagramsUniqueCommaSeperated = uniqueAnagrams.join(',');
+
+    await this.client.set(wordKey, anagramsUniqueCommaSeperated);
   }
 
   async findAnagrams(wordKey: string) : Promise<string> {
@@ -54,31 +62,33 @@ export class Anagram {
     return dictionary;
   }
 
-  filterDups(addWord: string, preWords: string) {
-    let result = '';
-    if(preWords?.indexOf(`${addWord},`) === -1 && preWords?.indexOf(`,${addWord}`) === -1) {
-      if(preWords) result = ',';
-      result = result + `${addWord}`;
+  validateAlpha(word: string) {
+    if(word.match(/^[a-z]+$/)) {
+      return true;
     }
-    return result;
+    return false;
+  }
+
+  validateValues(word: string) {
+    if(word.match(/^[a-z]+,?$/)) {
+      return true;
+    }
+    return false;
   }
 
   // sorts the entire file and stores it in a hash map
   async sortDictionaryWordsIntoRedis(dictionary: string[]) { // array passed by reference
-    // set once for the loop to prevent leading commas
-    let delimeter: string = '';
-
     // node js doesn't have tail call recursion so we use a loop
-    //dictionary.forEach(word => {
     for(let word of dictionary) {
       // will compare words by sorting each char in ascending order
       let sortedWordKey = this.sortWord(word);
       let preExistingWordsInValue = await this.getAnagrams(sortedWordKey);
-      //let preExistingWordsInValue = '';
-      await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.filterDups(word,preExistingWordsInValue));
-
-      delimeter = ',';
+      await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.comma(word));
     }
+  }
+
+  comma(word: string) {
+    if(word) return `,${word}`;
   }
   
   // ascending order, a to z

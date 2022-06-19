@@ -2,6 +2,7 @@
 
 import { Anagram } from '../dist/source/anagram.js';
 import readline from 'readline';
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
