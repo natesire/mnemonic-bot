@@ -44,6 +44,8 @@
     "redis": "^4.1.0"
   },
   "pkg": {
-    "options": ["experimental-modules"]
+    "options": [
+      "experimental-modules"
+    ]
   }
 }

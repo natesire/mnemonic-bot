@@ -1,3 +1,7 @@
+# Dependencies
+
+This repo depends on Redis to store the dictionary and anagrams
+
 # Easiest way to run for development
 
 ```cd source```

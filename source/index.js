@@ -8,8 +8,8 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-var waitForUserInput = function(anagram, anagrams) {
-  rl.question("AnagramFinder> ", function(word, anagramInst) {
+var waitForUserInput = function(anagram) {
+  rl.question("AnagramFinder (enter letters) > ", function(word, anagramInst) {
     let timeThree = time();
 
     if(word == 'exit') {
@@ -18,12 +18,26 @@ var waitForUserInput = function(anagram, anagrams) {
       return;
     }
 
+    // how is findAnagrams available on anagram when anagram is user input string?
     anagram.findAnagrams(word).then(function(anagrams) {
+
+      if(!anagrams) {
+        console.log("No anagrams found.");
+      }
+
+      console.log(word);
+
       let timeFour = time();
       let timeDiff = timeFour - timeThree;
 
       // count the number of anagrams
-      let anagramCount = anagrams?.split(',').length;
+      try {
+        let anagramCount = anagrams.split(',').length;
+      }
+      catch(e) {
+        console.log("No anagrams found.");
+        console.log(e);
+      }
 
       // return anagrams if found
       if(anagrams) { console.log(`${anagramCount} Anagrams found for ${word} in ${timeDiff} ms`); }
@@ -31,7 +45,8 @@ var waitForUserInput = function(anagram, anagrams) {
       if(anagrams === undefined) console.log(`No anagrams found for ${word} in ${timeDiff} ms`);
 
       waitForUserInput(anagram, ''); // does not add to the call stack
-    });
+    })
+    .catch(err => console.log(err))
   });
 }
 
