@@ -2,19 +2,13 @@
 
 This repo depends on Redis to store the dictionary and anagrams. If using Windows, Redis will need installed. It would be better to create an in-memory hash that stores the dictionary.
 
-# How to start the app
-
-cd source
-
-node index.js
-
-# Easiest way to run for development
+# Easiest way to get started 
 
 ```cd source```
 
 ```npm i```
 
-This test step also compiles the code for node. Not the exe. Read below for exe instructions.
+This test step also compiles the code for Typescript on Node JS.
 
 ```npm test```
 
