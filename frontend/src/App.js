@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+//import { Anagram } from './anagram.js';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
 function search() {
   var word = document.getElementById('search').value;
   alert('search')
+  //let anagram = new Anagram(word);
   /*
   fetch('http://localhost:5000/anagrams/' + word)
     .then(response => response.json())
