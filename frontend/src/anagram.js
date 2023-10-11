@@ -39,6 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Anagram = void 0;
 var fs = require("fs"); // use this for esmodules and typescript
 //import { createClient } from 'redis';
+//import fs from 'fs';    // use this for commonjs
 // find all anagrams in a dictionary
 var Anagram = /** @class */ (function () {
     function Anagram(dictionaryFile) {

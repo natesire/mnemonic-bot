@@ -2,6 +2,8 @@
 import * as fs from 'fs';    // use this for esmodules and typescript
 //import { createClient } from 'redis';
 
+//import fs from 'fs';    // use this for commonjs
+
 // find all anagrams in a dictionary
 export class Anagram {
   public dictionary: string[] = []; 
