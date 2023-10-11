@@ -20,6 +20,7 @@
     "rules": {
         "no-unused-expressions": "off",
         "no-unused-vars": "off",
+        "no-var-requires": "off",
         "react/react-in-jsx-scope": "off"
     }
 }

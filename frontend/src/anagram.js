@@ -52,8 +52,8 @@ var Anagram = /** @class */ (function () {
         //this.client = createClient();
         //this.client.on('error', (err) => console.log('Redis Client Error', err));
         this.anagramMap = new Map();
-        this.anagramMap.set('ags', 'gas');
-        this.anagramMap.set('ahs', 'ash');
+        this.anagramMap.set('ags', 'gas, sag');
+        this.anagramMap.set('ahs', 'ash, sha, has');
     }
     Anagram.prototype.setup = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -91,13 +91,10 @@ var Anagram = /** @class */ (function () {
     };
     Anagram.prototype.findAnagrams = function (wordKey) {
         var sortedWordKey = this.sortWord(wordKey);
-        //let anagrams = await this.readAnagramsFromRedis(sortedWordKey);
-        var a = this.anagramMap.get(sortedWordKey);
-        // return resolved promise
+        var anagrams = this.anagramMap.get(sortedWordKey);
         return new Promise(function (resolve, reject) {
-            resolve(a || 'NOT FOUND');
+            resolve(anagrams || 'Anagrams not found');
         });
-        //return a || 'NOT FOUND';
     };
     Anagram.prototype.loadDictionaryIntoArray = function () {
         var dictionary = fs.readFileSync(this.dictionaryFile, 'utf8').split('\r\n');

@@ -21,8 +21,8 @@ export class Anagram {
     //this.client.on('error', (err) => console.log('Redis Client Error', err));
 
     this.anagramMap = new Map();
-    this.anagramMap.set('ags', 'gas');
-    this.anagramMap.set('ahs', 'ash');
+    this.anagramMap.set('ags', 'gas, sag');
+    this.anagramMap.set('ahs', 'ash, sha, has');
   }
 
   async setup() {
@@ -51,14 +51,11 @@ export class Anagram {
 
   findAnagrams(wordKey: string) : Promise<string> {
     let sortedWordKey = this.sortWord(wordKey);
-    //let anagrams = await this.readAnagramsFromRedis(sortedWordKey);
-    let a = this.anagramMap.get(sortedWordKey);
+    let anagrams = this.anagramMap.get(sortedWordKey);
 
-    // return resolved promise
     return new Promise((resolve, reject) => {
-      resolve(a || 'NOT FOUND');
+      resolve(anagrams || 'Anagrams not found');
     });
-    //return a || 'NOT FOUND';
   }
 
   loadDictionaryIntoArray(): string[] {
