@@ -2,8 +2,6 @@
 import * as fs from 'fs';    // use this for esmodules and typescript
 //import { createClient } from 'redis';
 
-//import fs from 'fs';    // use this for commonjs
-
 // find all anagrams in a dictionary
 export class Anagram {
   public dictionary: string[] = []; 
@@ -14,9 +12,9 @@ export class Anagram {
   constructor(public dictionaryFile: string) {
     this.dictionaryFile = dictionaryFile; // loads dictionary file
     // validations here to keep the code clean
-    if (!fs.existsSync(this.dictionaryFile)) {
-      throw new Error('File not found!');
-    }
+    //if (!fs.existsSync(this.dictionaryFile)) {
+      //throw new Error('File not found!');
+    //}
 
     //this.client = createClient();
     //this.client.on('error', (err) => console.log('Redis Client Error', err));
