@@ -8,10 +8,11 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Enter a word to create Anagrams
+          Enter word to generate anagrams
         </p>
-        <input id='search'></input>
+        <input id='search' placeholder='enter word'></input>
         <input type='submit' value='Generate' onClick={search}></input>
+        <p id='anagrams'></p>
       </header>
     </div>
   );
@@ -19,9 +20,10 @@ function App() {
 
 function search() {
   var word = document.getElementById('search').value;
-  alert('search')
   let anagram = new Anagram(word);
-  console.log(anagram);
+  let findAnagrams = anagram.findAnagrams(word);
+  console.log(findAnagrams);
+  document.getElementById('anagrams').innerHTML = findAnagrams;
   /*
   fetch('http://localhost:5000/anagrams/' + word)
     .then(response => response.json())

@@ -8,6 +8,7 @@ export class Anagram {
   public sortedDictionary; //: Map<string, string>;
   public dictionaryArr: string[];
   public client: any;
+  public anagramMap: Map<string, string>;
   
   constructor(public dictionaryFile: string) {
     this.dictionaryFile = dictionaryFile; // loads dictionary file
@@ -18,6 +19,9 @@ export class Anagram {
 
     //this.client = createClient();
     //this.client.on('error', (err) => console.log('Redis Client Error', err));
+
+    this.anagramMap = new Map();
+    this.anagramMap.set('sag', 'gas');
   }
 
   async setup() {
@@ -27,12 +31,13 @@ export class Anagram {
   }
 
   // how to preload the dictionary?
+  /*
   async readAnagramsFromRedis(sortedWordKey: string) : Promise<string> {
     let commaSeparatedAnagrams = await this.client.get(sortedWordKey);
     let anagramsArr = commaSeparatedAnagrams.split(',').filter((item) => item.match(/^[a-z]+/)); // filter out empty strings
     let anagramsWithCommas = anagramsArr.join(',');
     return anagramsWithCommas;
-  }
+  }*/
 
   async setAnagrams(wordKey: string, anagramsCommaSeperated: string) {
     let anagrams = anagramsCommaSeperated.split(',');
@@ -43,10 +48,16 @@ export class Anagram {
     //await this.client.set(wordKey, anagramsUniqueCommaSeperated);
   }
 
-  async findAnagrams(wordKey: string) : Promise<string> {
+  findAnagrams(wordKey: string) : string {
     let sortedWordKey = this.sortWord(wordKey);
-    let anagrams = await this.readAnagramsFromRedis(sortedWordKey);
-    return anagrams;
+    //let anagrams = await this.readAnagramsFromRedis(sortedWordKey);
+    //let a = this.anagramMap.get('sag');
+
+    // return resolved promise
+    /*return new Promise((resolve, reject) => {
+      resolve('hello2' || 'NOT FOUND');
+    });*/
+    return 'hello2' || 'NOT FOUND';
   }
 
   loadDictionaryIntoArray(): string[] {
@@ -74,8 +85,8 @@ export class Anagram {
     for(let word of dictionary) {
       // will compare words by sorting each char in ascending order
       let sortedWordKey = this.sortWord(word);
-      let preExistingWordsInValue = await this.readAnagramsFromRedis(sortedWordKey);
-      await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.comma(word));
+      //let preExistingWordsInValue = await this.readAnagramsFromRedis(sortedWordKey);
+      //await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.comma(word));
     }
   }
 

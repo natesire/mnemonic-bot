@@ -51,6 +51,8 @@ var Anagram = /** @class */ (function () {
         //}
         //this.client = createClient();
         //this.client.on('error', (err) => console.log('Redis Client Error', err));
+        this.anagramMap = new Map();
+        this.anagramMap.set('sag', 'gas');
     }
     Anagram.prototype.setup = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -69,21 +71,13 @@ var Anagram = /** @class */ (function () {
         });
     };
     // how to preload the dictionary?
-    Anagram.prototype.readAnagramsFromRedis = function (sortedWordKey) {
-        return __awaiter(this, void 0, void 0, function () {
-            var commaSeparatedAnagrams, anagramsArr, anagramsWithCommas;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.client.get(sortedWordKey)];
-                    case 1:
-                        commaSeparatedAnagrams = _a.sent();
-                        anagramsArr = commaSeparatedAnagrams.split(',').filter(function (item) { return item.match(/^[a-z]+/); });
-                        anagramsWithCommas = anagramsArr.join(',');
-                        return [2 /*return*/, anagramsWithCommas];
-                }
-            });
-        });
-    };
+    /*
+    async readAnagramsFromRedis(sortedWordKey: string) : Promise<string> {
+      let commaSeparatedAnagrams = await this.client.get(sortedWordKey);
+      let anagramsArr = commaSeparatedAnagrams.split(',').filter((item) => item.match(/^[a-z]+/)); // filter out empty strings
+      let anagramsWithCommas = anagramsArr.join(',');
+      return anagramsWithCommas;
+    }*/
     Anagram.prototype.setAnagrams = function (wordKey, anagramsCommaSeperated) {
         return __awaiter(this, void 0, void 0, function () {
             var anagrams, cleaned;
@@ -95,19 +89,14 @@ var Anagram = /** @class */ (function () {
         });
     };
     Anagram.prototype.findAnagrams = function (wordKey) {
-        return __awaiter(this, void 0, void 0, function () {
-            var sortedWordKey, anagrams;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        sortedWordKey = this.sortWord(wordKey);
-                        return [4 /*yield*/, this.readAnagramsFromRedis(sortedWordKey)];
-                    case 1:
-                        anagrams = _a.sent();
-                        return [2 /*return*/, anagrams];
-                }
-            });
-        });
+        var sortedWordKey = this.sortWord(wordKey);
+        //let anagrams = await this.readAnagramsFromRedis(sortedWordKey);
+        //let a = this.anagramMap.get('sag');
+        // return resolved promise
+        /*return new Promise((resolve, reject) => {
+          resolve('hello2' || 'NOT FOUND');
+        });*/
+        return 'hello2' || 'NOT FOUND';
     };
     Anagram.prototype.loadDictionaryIntoArray = function () {
         var dictionary = fs.readFileSync(this.dictionaryFile, 'utf8').split('\r\n');
@@ -128,28 +117,16 @@ var Anagram = /** @class */ (function () {
     // sorts the entire file and stores it in a hash map
     Anagram.prototype.sortDictionaryWordsIntoRedis = function (dictionary) {
         return __awaiter(this, void 0, void 0, function () {
-            var _i, dictionary_1, word, sortedWordKey, preExistingWordsInValue;
+            var _i, dictionary_1, word, sortedWordKey;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _i = 0, dictionary_1 = dictionary;
-                        _a.label = 1;
-                    case 1:
-                        if (!(_i < dictionary_1.length)) return [3 /*break*/, 5];
-                        word = dictionary_1[_i];
-                        sortedWordKey = this.sortWord(word);
-                        return [4 /*yield*/, this.readAnagramsFromRedis(sortedWordKey)];
-                    case 2:
-                        preExistingWordsInValue = _a.sent();
-                        return [4 /*yield*/, this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.comma(word))];
-                    case 3:
-                        _a.sent();
-                        _a.label = 4;
-                    case 4:
-                        _i++;
-                        return [3 /*break*/, 1];
-                    case 5: return [2 /*return*/];
+                // node js doesn't have tail call recursion so we use a loop
+                for (_i = 0, dictionary_1 = dictionary; _i < dictionary_1.length; _i++) {
+                    word = dictionary_1[_i];
+                    sortedWordKey = this.sortWord(word);
+                    //let preExistingWordsInValue = await this.readAnagramsFromRedis(sortedWordKey);
+                    //await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.comma(word));
                 }
+                return [2 /*return*/];
             });
         });
     };
