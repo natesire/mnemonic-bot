@@ -52,7 +52,8 @@ var Anagram = /** @class */ (function () {
         //this.client = createClient();
         //this.client.on('error', (err) => console.log('Redis Client Error', err));
         this.anagramMap = new Map();
-        this.anagramMap.set('sag', 'gas');
+        this.anagramMap.set('ags', 'gas');
+        this.anagramMap.set('ahs', 'ash');
     }
     Anagram.prototype.setup = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -91,12 +92,12 @@ var Anagram = /** @class */ (function () {
     Anagram.prototype.findAnagrams = function (wordKey) {
         var sortedWordKey = this.sortWord(wordKey);
         //let anagrams = await this.readAnagramsFromRedis(sortedWordKey);
-        var a = this.anagramMap.get('sag');
+        var a = this.anagramMap.get(sortedWordKey);
         // return resolved promise
-        /*return new Promise((resolve, reject) => {
-          resolve('hello2' || 'NOT FOUND');
-        });*/
-        return a || 'NOT FOUND';
+        return new Promise(function (resolve, reject) {
+            resolve(a || 'NOT FOUND');
+        });
+        //return a || 'NOT FOUND';
     };
     Anagram.prototype.loadDictionaryIntoArray = function () {
         var dictionary = fs.readFileSync(this.dictionaryFile, 'utf8').split('\r\n');
@@ -130,7 +131,7 @@ var Anagram = /** @class */ (function () {
             });
         });
     };
-    Anagram.prototype.comma = function (word) {
+    Anagram.prototype.preCommaWord = function (word) {
         if (word)
             return ",".concat(word);
     };

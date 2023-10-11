@@ -21,7 +21,8 @@ export class Anagram {
     //this.client.on('error', (err) => console.log('Redis Client Error', err));
 
     this.anagramMap = new Map();
-    this.anagramMap.set('sag', 'gas');
+    this.anagramMap.set('ags', 'gas');
+    this.anagramMap.set('ahs', 'ash');
   }
 
   async setup() {
@@ -48,16 +49,16 @@ export class Anagram {
     //await this.client.set(wordKey, anagramsUniqueCommaSeperated);
   }
 
-  findAnagrams(wordKey: string) : string {
+  findAnagrams(wordKey: string) : Promise<string> {
     let sortedWordKey = this.sortWord(wordKey);
     //let anagrams = await this.readAnagramsFromRedis(sortedWordKey);
-    let a = this.anagramMap.get('sag');
+    let a = this.anagramMap.get(sortedWordKey);
 
     // return resolved promise
-    /*return new Promise((resolve, reject) => {
-      resolve('hello2' || 'NOT FOUND');
-    });*/
-    return a || 'NOT FOUND';
+    return new Promise((resolve, reject) => {
+      resolve(a || 'NOT FOUND');
+    });
+    //return a || 'NOT FOUND';
   }
 
   loadDictionaryIntoArray(): string[] {
@@ -90,7 +91,7 @@ export class Anagram {
     }
   }
 
-  comma(word: string) {
+  preCommaWord(word: string) {
     if(word) return `,${word}`;
   }
   
