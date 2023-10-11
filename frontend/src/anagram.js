@@ -91,12 +91,12 @@ var Anagram = /** @class */ (function () {
     Anagram.prototype.findAnagrams = function (wordKey) {
         var sortedWordKey = this.sortWord(wordKey);
         //let anagrams = await this.readAnagramsFromRedis(sortedWordKey);
-        //let a = this.anagramMap.get('sag');
+        var a = this.anagramMap.get('sag');
         // return resolved promise
         /*return new Promise((resolve, reject) => {
           resolve('hello2' || 'NOT FOUND');
         });*/
-        return 'hello2' || 'NOT FOUND';
+        return a || 'NOT FOUND';
     };
     Anagram.prototype.loadDictionaryIntoArray = function () {
         var dictionary = fs.readFileSync(this.dictionaryFile, 'utf8').split('\r\n');

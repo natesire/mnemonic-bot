@@ -51,13 +51,13 @@ export class Anagram {
   findAnagrams(wordKey: string) : string {
     let sortedWordKey = this.sortWord(wordKey);
     //let anagrams = await this.readAnagramsFromRedis(sortedWordKey);
-    //let a = this.anagramMap.get('sag');
+    let a = this.anagramMap.get('sag');
 
     // return resolved promise
     /*return new Promise((resolve, reject) => {
       resolve('hello2' || 'NOT FOUND');
     });*/
-    return 'hello2' || 'NOT FOUND';
+    return a || 'NOT FOUND';
   }
 
   loadDictionaryIntoArray(): string[] {
