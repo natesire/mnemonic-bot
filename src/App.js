@@ -12,27 +12,17 @@ function App() {
           Enter word to generate anagrams
         </p>
         <input id='search' placeholder='enter word'></input>
-        <input type='submit' value='Generate' onClick={handleClick}></input>
-        <p id='anagrams'></p>
+        <input type='submit' value='Generate' onClick={handleClickOnGenerateButton}></input>
+        <p id='anagramsResults'></p>
       </header>
     </div>
   );
 }
 
-const handleClick = async () => {
-
-    const res = await fetch("https://jsonplaceholder.typicode.com/todos/1");
-    const data = await res.json();
-    console.log(data);
-
-    const res2 = await fetch("http://localhost:3000/");
-    const data2 = await res2.json();
-    console.log(data2);
-
-  fetch('https://jsonplaceholder.typicode.com/todos/1').then(function (response) {
-  let j = response.json();
-  //console.log(j);
-  })
+const handleClickOnGenerateButton = async () => {
+  const responseFromBackend = await fetch("http://localhost:3000/?word=hello");
+  const anagramsJSON = await responseFromBackend.json();
+  document.getElementById('anagramsResults').innerHTML = anagramsJSON.anagramsResults;
 }
 
 function search() {

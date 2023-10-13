@@ -26,10 +26,8 @@ app.use(function (req, res, next) {
 app.use(cors({ credentials: false }));
 
 app.get('/', function (req, res) {
-  //res.send('Hello World')
-    // respond with json response
-    res.json({ message: 'Hello World' })
-    console.log('hello world');
+    res.json({ anagramsResults: 'Hello World' });
+    console.log('anagrams requested');
     console.log(req.header('origin'));
     console.log(req.header('x-forwarded-host'));
     console.log(req.header('host'));
