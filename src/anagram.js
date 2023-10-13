@@ -42,17 +42,25 @@ var Anagram = /** @class */ (function () {
     function Anagram(dictionaryFile) {
         this.dictionaryFile = dictionaryFile;
         this.dictionary = [];
+        this.mapFile = 'anagramMap.txt';
         this.dictionaryFile = dictionaryFile; // loads dictionary file
-        if (!fs.existsSync(this.dictionaryFile)) {
-            throw new Error('File not found!');
-        }
-        // check if file exists
+        /*if (!fs.existsSync(this.dictionaryFile)) {
+          throw new Error('File not found!');
+        }*/
         //this.client = createClient();
         //this.client.on('error', (err) => console.log('Redis Client Error', err));
-        this.anagramMap = new Map();
-        this.anagramMap.set('ags', 'gas, sag');
-        this.anagramMap.set('ahs', 'ash, sha, has');
+        this.preLoadMap();
     }
+    Anagram.prototype.preLoadMap = function () {
+        var _this = this;
+        var mapFile = fs.readFileSync(this.mapFile, 'utf8').split('\r\n');
+        mapFile.forEach(function (line) {
+            var firstLineArr = line.split(',');
+            var key = firstLineArr[0];
+            var wordsCommaSeperated = firstLineArr.splice(1).join(',');
+            _this.anagramMap.set(key, wordsCommaSeperated);
+        });
+    };
     Anagram.prototype.setup = function () {
         return __awaiter(this, void 0, void 0, function () {
             var dictionaryArr, _a;
