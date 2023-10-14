@@ -48,6 +48,7 @@ if (!fs.existsSync('anagram.txt')) {
 }
 
 (async function processLineByLine() {
+    let anagramMap = new Map();
     try {
       const rl = readline.createInterface({
         input: fs.createReadStream('dictionary.txt'),
@@ -56,9 +57,31 @@ if (!fs.existsSync('anagram.txt')) {
   
       rl.on('line', (line) => {
         console.log(`Line from file: ${line}`);
+
+        let key = line.split('').sort().join('').toLowerCase();
+        if(anagramMap.has(key)) {
+            anagramMap.get(key).push(line);
+        } else {
+            anagramMap.set(key, [line]);
+        }
       });
   
       await events.once(rl, 'close');
+
+      var writeAnagram = fs.createWriteStream('anagram.txt', {
+        flags: 'a' // 'a' means appending (old data will be preserved)
+        })
+
+        // which of these have commas in the output?
+        anagramMap.forEach(function(value, key) {
+            console.log(key + ' = ' + value);
+            writeAnagram.write(key + ' = ' + value + '\n');
+        });
+
+        writeAnagram.end();
+
+        // all available methods for Map
+        console.log(Object.getOwnPropertyNames(Map.prototype));
   
       console.log('Reading file line by line with readline done.');
       const used = process.memoryUsage().heapUsed / 1024 / 1024;
