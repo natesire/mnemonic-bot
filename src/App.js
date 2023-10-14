@@ -20,7 +20,7 @@ function App() {
 }
 
 const handleClickOnGenerateButton = async () => {
-  const responseFromBackend = await fetch("http://localhost:3000/?word=hello");
+  const responseFromBackend = await fetch("http://localhost:3000/?word=dusty");
   const anagramsJSON = await responseFromBackend.json();
   document.getElementById('anagramsResults').innerHTML = anagramsJSON.anagramsResults;
 }

@@ -1,6 +1,9 @@
 const cors = require('cors');
 const express = require('express')
 const app = express()
+const fs = require('fs');
+const events = require('events');
+const readline = require('readline');
 
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
@@ -26,11 +29,41 @@ app.use(function (req, res, next) {
 app.use(cors({ credentials: false }));
 
 app.get('/', function (req, res) {
-    res.json({ anagramsResults: 'Hello World' });
-    console.log('anagrams requested');
-    console.log(req.header('origin'));
-    console.log(req.header('x-forwarded-host'));
-    console.log(req.header('host'));
+    res.json({ anagramsResults: 'dusty, study' });
+    console.log('anagrams requested for word: ' + req.query.word);
+    console.log("origin " + req.header('origin'));
+    console.log("host " + req.header('host'));
 })
 
 app.listen(3000)
+
+if (!fs.existsSync('dictionary.txt')) {
+        console.log('dictionary file does NOT exist');
+    }
+
+if (!fs.existsSync('anagram.txt')) {
+    console.log('anagram file does NOT exist');
+
+    buildAnagrams();
+}
+
+(async function processLineByLine() {
+    try {
+      const rl = readline.createInterface({
+        input: fs.createReadStream('dictionary.txt'),
+        crlfDelay: Infinity
+      });
+  
+      rl.on('line', (line) => {
+        console.log(`Line from file: ${line}`);
+      });
+  
+      await events.once(rl, 'close');
+  
+      console.log('Reading file line by line with readline done.');
+      const used = process.memoryUsage().heapUsed / 1024 / 1024;
+      console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
+    } catch (err) {
+      console.error(err);
+    }
+  })();
