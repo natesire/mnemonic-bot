@@ -38,35 +38,29 @@ app.get('/', function (req, res) {
 app.listen(3000)
 
 if (!fs.existsSync('dictionary.txt')) {
-        console.log('dictionary file does NOT exist');
+        console.log('exiting because dictionary file does NOT exist. cannot build anagrams');
+        process.exit();
     }
 
 if (!fs.existsSync('anagram.txt')) {
-    console.log('anagram file does NOT exist');
-
-    buildAnagrams();
+    console.log('anagram.txt file does NOT exist');
+    processAnagrams();
 }
 
-(async function processLineByLine() {
+async function processAnagrams() {
     let anagramMap = new Map();
     try {
-      const rl = readline.createInterface({
+      const rlDictionary = readline.createInterface({
         input: fs.createReadStream('dictionary.txt'),
         crlfDelay: Infinity
       });
   
-      rl.on('line', (line) => {
-        console.log(`Line from file: ${line}`);
-
-        let key = line.split('').sort().join('').toLowerCase();
-        if(anagramMap.has(key)) {
-            anagramMap.get(key).push(line);
-        } else {
-            anagramMap.set(key, [line]);
-        }
+      rlDictionary.on('line', (line) => {
+        let sortedWordKey = line.split('').sort().join('').toLowerCase();
+        anagramMap.get(sortedWordKey)?.push(line) || anagramMap.set(sortedWordKey, [line]);
       });
   
-      await events.once(rl, 'close');
+      await events.once(rlDictionary, 'close');
 
       var writeAnagram = fs.createWriteStream('anagram.txt', {
         flags: 'a' // 'a' means appending (old data will be preserved)
@@ -75,18 +69,15 @@ if (!fs.existsSync('anagram.txt')) {
         // which of these have commas in the output?
         anagramMap.forEach(function(value, key) {
             console.log(key + ' = ' + value);
-            writeAnagram.write(key + ' = ' + value + '\n');
+            writeAnagram.write(key + ',' + value + '\n');
         });
 
         writeAnagram.end();
 
-        // all available methods for Map
-        console.log(Object.getOwnPropertyNames(Map.prototype));
-  
       console.log('Reading file line by line with readline done.');
       const used = process.memoryUsage().heapUsed / 1024 / 1024;
       console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
     } catch (err) {
       console.error(err);
     }
-  })();
+  }
