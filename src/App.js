@@ -13,7 +13,7 @@ function App() {
         </p>
         <input id='search' className="searchField" placeholder='enter word or letters'></input>
         <input type='submit' className="myButton" value='Search' onClick={handleClickOnGenerateButton}></input>
-        <p id="searchFor" className="searchFor">search for:</p>
+        <p id="searchFor" className="searchFor"></p>
         <p id='anagramsResults' className='anagramResults'></p>
       </header>
     </div>
@@ -34,6 +34,12 @@ const handleClickOnGenerateButton = async () => {
   //const responseFromBackend = await fetch("http://localhost:3000/?word=" + searchFor);
   //const anagramsJSON = await responseFromBackend.json();
   //output = anagramsJSON.anagramsResults;
+
+  // fetch with a timeout of 10 seconds
+  const controller = new AbortController();
+  //const timeout = setTimeout(() => { controller.abort(); }, 10000);
+  //const responseFromBackend = await fetch("http://localhost:3000/?word=" + searchFor, { signal: controller.signal });
+
 
   //fuzzy match one letter
   sortedWordKey += "u"
