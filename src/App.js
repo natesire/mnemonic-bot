@@ -7,18 +7,27 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-
-<div className="container">
-  <img className="typewriter" src="typewriter2.png" alt="typewriter"></img>
-</div>
-
-        <p>
-          Search for Anagrams
-        </p>
-        <input id='search' className="searchField" placeholder='enter word or letters'></input>
-        <input type='submit' className="myButton" value='Search' onClick={handleClickOnGenerateButton}></input>
+        <div className="container">
+          <img
+            className="typewriter"
+            src="typewriter2.png"
+            alt="typewriter"
+          ></img>
+        </div>
+        <p>Search for Anagrams</p>
+        <input
+          id="search"
+          className="searchField"
+          placeholder="enter word or letters"
+        ></input>
+        <input
+          type="submit"
+          className="myButton"
+          value="Search"
+          onClick={handleClickOnGenerateButton}
+        ></input>
         <p id="searchFor" className="searchFor"></p>
-        <p id='anagramsResults' className='anagramResults'></p>
+        <p id="anagramsResults" className="anagramResults"></p>
       </header>
     </div>
   );
