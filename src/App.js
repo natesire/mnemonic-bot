@@ -11,9 +11,9 @@ function App() {
         <p>
           Search for Anagrams
         </p>
-        <input id='search' className="enter" placeholder='enter word or letters'></input>
+        <input id='search' className="searchField" placeholder='enter word or letters'></input>
         <input type='submit' className="myButton" value='Search' onClick={handleClickOnGenerateButton}></input>
-        <p id="searchFor">search for:</p>
+        <p id="searchFor" className="searchFor">search for:</p>
         <p id='anagramsResults'></p>
       </header>
     </div>
@@ -21,11 +21,23 @@ function App() {
 }
 
 const handleClickOnGenerateButton = async () => {
+
+  // in case the backend is unresponsive, use this local map
+  let localAnagramMap = new Map();
+  localAnagramMap.set('dstuy', ['dusty', 'study']);
+  localAnagramMap.set('eilv', ['live', 'evil']);
+
   let searchFor = document.getElementById('search').value;
+  let sortedWordKey = searchFor.split('').sort().join('').toLowerCase();
   document.getElementById('searchFor').innerHTML = "searching..."
-  const responseFromBackend = await fetch("http://localhost:3000/?word=" + searchFor);
-  const anagramsJSON = await responseFromBackend.json();
-  document.getElementById('anagramsResults').innerHTML = anagramsJSON.anagramsResults;
+
+  //const responseFromBackend = await fetch("http://localhost:3000/?word=" + searchFor);
+  //const anagramsJSON = await responseFromBackend.json();
+  //output = anagramsJSON.anagramsResults;
+
+  const output = localAnagramMap.get(sortedWordKey) || 'no anagrams found';
+  
+  document.getElementById('anagramsResults').innerHTML = output;
   document.getElementById('searchFor').innerHTML = "search for: " + searchFor;
 }
 

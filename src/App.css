@@ -72,11 +72,20 @@
 	top:1px;
 }
 
-.enter {
+.searchField {
   width: 33%;
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 8px;
+  font-size: inherit;
+}
+
+.p {
+  font-family: sans-serif;
+}
+
+.searchFor {
+  font-family: monospace
 }
