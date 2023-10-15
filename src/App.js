@@ -7,7 +7,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+
+<div className="container">
+  <img className="typewriter" src="typewriter2.png" alt="typewriter"></img>
+</div>
+
         <p>
           Search for Anagrams
         </p>
