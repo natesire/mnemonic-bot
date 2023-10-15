@@ -20,10 +20,11 @@ function App() {
 }
 
 const handleClickOnGenerateButton = async () => {
-  //let search = document.getElementById('search').value;
+  let search = document.getElementById('search').value;
   const responseFromBackend = await fetch("http://localhost:3000/?word=gas");
   const anagramsJSON = await responseFromBackend.json();
   document.getElementById('anagramsResults').innerHTML = anagramsJSON.anagramsResults;
+  document.getElementById('anagramsResults').innerHTML = "search: " + search;
 }
 
 function search() {
