@@ -35,6 +35,10 @@ const handleClickOnGenerateButton = async () => {
   //const anagramsJSON = await responseFromBackend.json();
   //output = anagramsJSON.anagramsResults;
 
+  //fuzzy match one letter
+  sortedWordKey += "u"
+  sortedWordKey = sortedWordKey.split('').sort().join('').toLowerCase();
+
   let output = localAnagramMap.get(sortedWordKey) || 'no anagrams found';
 
   // the view is responsible for formatting the output

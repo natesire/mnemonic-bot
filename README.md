@@ -14,3 +14,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 ### `npm run test`
 
 Launches the test runner in the interactive watch mode.
+
+### Optional Backend
+
+Some example words are hard coded into the frontend so you can see the working app without a backend server.
