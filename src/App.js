@@ -9,10 +9,10 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Enter word to generate anagrams
+          Search for Anagrams
         </p>
-        <input id='search' placeholder='enter word'></input>
-        <input type='submit' value='Generate' onClick={handleClickOnGenerateButton}></input>
+        <input id='search' placeholder='enter word or letters'></input>
+        <input type='submit' className="myButton" value='Search' onClick={handleClickOnGenerateButton}></input>
         <p id="searchFor">search for:</p>
         <p id='anagramsResults'></p>
       </header>
@@ -22,7 +22,7 @@ function App() {
 
 const handleClickOnGenerateButton = async () => {
   let searchFor = document.getElementById('search').value;
-  document.getElementById('searchFor').innerHTML = "searching"
+  document.getElementById('searchFor').innerHTML = "searching..."
   const responseFromBackend = await fetch("http://localhost:3000/?word=" + searchFor);
   const anagramsJSON = await responseFromBackend.json();
   document.getElementById('anagramsResults').innerHTML = anagramsJSON.anagramsResults;
