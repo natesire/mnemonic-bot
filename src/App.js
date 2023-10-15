@@ -11,7 +11,7 @@ function App() {
         <p>
           Search for Anagrams
         </p>
-        <input id='search' placeholder='enter word or letters'></input>
+        <input id='search' className="enter" placeholder='enter word or letters'></input>
         <input type='submit' className="myButton" value='Search' onClick={handleClickOnGenerateButton}></input>
         <p id="searchFor">search for:</p>
         <p id='anagramsResults'></p>
