@@ -2,6 +2,10 @@
 
 This anagram tool helps identify typos from mixed up letters.
 
+View the frontend on ReactJS at Github Pages
+
+https://natesire.github.io/anagrams/
+
 ## Available NPM NodeJS Scripts
 
 In the project root directory and backend directory, you can run:
