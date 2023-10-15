@@ -6,6 +6,8 @@ View the frontend on ReactJS at Github Pages
 
 https://natesire.github.io/anagrams/
 
+![alt text](https://github.com/natesire/anagrams/blob/main/public/githubPages.png)
+
 ## Available NPM NodeJS Scripts
 
 In the project root directory and backend directory, you can run:
