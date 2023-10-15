@@ -13,6 +13,7 @@ function App() {
         </p>
         <input id='search' placeholder='enter word'></input>
         <input type='submit' value='Generate' onClick={handleClickOnGenerateButton}></input>
+        <p id="searchFor">search for:</p>
         <p id='anagramsResults'></p>
       </header>
     </div>
@@ -20,11 +21,12 @@ function App() {
 }
 
 const handleClickOnGenerateButton = async () => {
-  let search = document.getElementById('search').value;
-  const responseFromBackend = await fetch("http://localhost:3000/?word=gas");
+  let searchFor = document.getElementById('search').value;
+  document.getElementById('searchFor').innerHTML = "searching"
+  const responseFromBackend = await fetch("http://localhost:3000/?word=" + searchFor);
   const anagramsJSON = await responseFromBackend.json();
   document.getElementById('anagramsResults').innerHTML = anagramsJSON.anagramsResults;
-  document.getElementById('anagramsResults').innerHTML = "search: " + search;
+  document.getElementById('searchFor').innerHTML = "search for: " + searchFor;
 }
 
 function search() {
