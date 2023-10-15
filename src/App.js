@@ -14,7 +14,7 @@ function App() {
         <input id='search' className="searchField" placeholder='enter word or letters'></input>
         <input type='submit' className="myButton" value='Search' onClick={handleClickOnGenerateButton}></input>
         <p id="searchFor" className="searchFor">search for:</p>
-        <p id='anagramsResults'></p>
+        <p id='anagramsResults' className='anagramResults'></p>
       </header>
     </div>
   );
@@ -35,8 +35,11 @@ const handleClickOnGenerateButton = async () => {
   //const anagramsJSON = await responseFromBackend.json();
   //output = anagramsJSON.anagramsResults;
 
-  const output = localAnagramMap.get(sortedWordKey) || 'no anagrams found';
-  
+  let output = localAnagramMap.get(sortedWordKey) || 'no anagrams found';
+
+  // the view is responsible for formatting the output
+  output = styleOutput(output);
+
   document.getElementById('anagramsResults').innerHTML = output;
   document.getElementById('searchFor').innerHTML = "search for: " + searchFor;
 }
@@ -62,6 +65,10 @@ function search() {
   .catch(function (err) {
     console.log('Fetch Error :-S', err);
   });
+}
+
+function styleOutput(input) {
+  return input.toString().replace(/,([a-z])/gi, ', $1'); // space after commas
 }
 
 export default App;

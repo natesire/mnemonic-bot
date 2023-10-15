@@ -89,3 +89,10 @@
 .searchFor {
   font-family: monospace
 }
+
+.anagramResults {
+  font-size: 20px;
+  background-color: #337fed;
+  border-radius: 5px;
+  padding: 5px;
+}
