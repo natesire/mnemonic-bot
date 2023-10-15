@@ -29,7 +29,24 @@ app.use(function (req, res, next) {
 app.use(cors({ credentials: false }));
 
 app.get('/', function (req, res) {
-    res.json({ anagramsResults: 'dusty, study' });
+
+    let anagramMap = new Map();
+
+    fs.readFile('anagram.txt', 'utf8', function(err, data) {
+        if (err) throw err;
+        console.log('OK: ' + 'anagram.txt');
+        data.split('\n').forEach(function(lineStr) {
+            let valsArr = lineStr.split(',')
+            let key = valsArr[0]
+            let valuesArr = valsArr.slice(1);
+            anagramMap.set(key, valuesArr);
+        });
+
+        let sortedWordKey = req.query.word?.split('').sort().join('').toLowerCase();
+        let anagramsAnswer = anagramMap.get(sortedWordKey) || 'no anagrams found';
+        res.json({ anagramsResults: anagramsAnswer });
+    });
+
     console.log('anagrams requested for word: ' + req.query.word);
     console.log("origin " + req.header('origin'));
     console.log("host " + req.header('host'));
@@ -66,7 +83,6 @@ async function processAnagrams() {
         flags: 'a' // 'a' means appending (old data will be preserved)
         })
 
-        // which of these have commas in the output?
         anagramMap.forEach(function(value, key) {
             console.log(key + ' = ' + value);
             writeAnagram.write(key + ',' + value + '\n');
