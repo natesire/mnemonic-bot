@@ -35,6 +35,8 @@ function App() {
 
 const handleClickOnGenerateButton = async () => {
 
+  await searchAnagrams()
+
   // in case the backend is unresponsive, use this local map
   let localAnagramMap = new Map();
   localAnagramMap.set('dstuy', ['dusty', 'study']);
@@ -49,7 +51,7 @@ const handleClickOnGenerateButton = async () => {
   //output = anagramsJSON.anagramsResults;
 
   // fetch with a timeout of 10 seconds
-  const controller = new AbortController();
+  //const controller = new AbortController();
   //const timeout = setTimeout(() => { controller.abort(); }, 10000);
   //const responseFromBackend = await fetch("http://localhost:3000/?word=" + searchFor, { signal: controller.signal });
 
@@ -67,27 +69,16 @@ const handleClickOnGenerateButton = async () => {
   document.getElementById('searchFor').innerHTML = "search for: " + searchFor;
 }
 
-function search() {
+async function searchAnagrams() {
+
+  // cache the anagram map on the client
+  let file = await fetch("http://localhost:3000/anagrams/anagramMap.txt");
+  console.log(await file.text());
+  let out = Object.getOwnPropertyNames(file)
+  console.log(out);
+
   //var wordToSearchFor = document.getElementById('search').value;
 
-  // get request to port 3000
-  // disable CORS
-  fetch('https://jsonplaceholder.typicode.com/todos/1', {
-     //mode: 'no-cors',
-     //method: 'GET',
-     /*headers: {
-       'Content-Type': 'application/json'
-     },*/ 
-    })
-  .then(function (response) {
-    let j = response.json();
-    document.getElementById('anagrams').innerHTML = j;
-    console.log(response);
-    console.log(response.data) 
-  })
-  .catch(function (err) {
-    console.log('Fetch Error :-S', err);
-  });
 }
 
 function styleOutput(input) {
