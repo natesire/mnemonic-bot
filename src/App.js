@@ -1,18 +1,12 @@
-import logo from './logo.svg';
+import typewriter from './typewriter.png';
 import './App.css';
-//import { Anagram } from './anagram.js';
-
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <div className="container">
-          <img
-            className="typewriter"
-            src="typewriter2.png"
-            alt="typewriter"
-          ></img>
+        <img src={typewriter} className="typewriter" alt="logo" />
         </div>
         <p>Search for Anagrams</p>
         <input
