@@ -105,3 +105,26 @@
   background-blend-mode: screen;
   width: 400px;
 }
+
+/* Default (unvisited) link styles */
+a {
+  color: #afbecb; /* Default text color (usually blue) */
+  text-decoration: none; /* Remove underlines */
+}
+
+/* Visited link styles */
+a:visited {
+  color: #e3dfe6; /* Color for visited links */
+}
+
+/* Hover (mouse over) link styles */
+a:hover {
+  color: #ddcac9; /* Color when hovering over the link */
+  text-decoration: underline; /* Add an underline when hovering */
+}
+
+/* Active (when clicked) link styles */
+a:active {
+  color: #e2d5d5; /* Color when the link is clicked */
+  text-decoration: none; /* Remove underline when clicked */
+}

@@ -22,7 +22,7 @@ function App() {
         ></input>
         <p id="searchFor" className="searchFor"></p>
         <p id="anagramsResults" className="anagramResults"></p>
-        <a href='reactjs.com' className="githubLink">Built on ReactJS</a>
+        <a href='https://react.dev/' className="">Built on ReactJS</a>
       </header>
     </div>
   );
@@ -30,7 +30,7 @@ function App() {
 
 const handleClickOnGenerateButton = async () => {
 
-  await searchAnagrams()
+  await loadAnagrams()
 
   // in case the backend is unresponsive, use this local map
   let localAnagramMap = new Map();
@@ -64,15 +64,21 @@ const handleClickOnGenerateButton = async () => {
   document.getElementById('searchFor').innerHTML = "search for: " + searchFor;
 }
 
-async function searchAnagrams() {
+async function loadAnagrams() {
+  let sources = [];
+  // easy to extend
+  sources.push("http://localhost:3000/anagrams/anagramMap.txt");
+  sources.push("http://localhost:3000/");
 
-  // cache the anagram map on the client
-  let file = await fetch("http://localhost:3000/anagrams/anagramMap.txt");
-  console.log(await file.text());
-  let out = Object.getOwnPropertyNames(file)
-  console.log(out);
+  sources.forEach(async function (source) {
+    try {
+      let response = await fetch(source);
+      let text = await response.text();
+    } catch (err) {
+      console.log(`Error fetching ${source}: ${err}`);
+    }
+  });
 
-  //var wordToSearchFor = document.getElementById('search').value;
 
 }
 
