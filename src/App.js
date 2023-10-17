@@ -22,6 +22,7 @@ function App() {
         ></input>
         <p id="searchFor" className="searchFor"></p>
         <p id="anagramsResults" className="anagramResults"></p>
+        <a href='reactjs.com' className="githubLink">Built on ReactJS</a>
       </header>
     </div>
   );
