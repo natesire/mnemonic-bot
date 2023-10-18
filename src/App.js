@@ -32,7 +32,7 @@ function App() {
 const handleClickOnGenerateButton = async () => {
 
   let anagramTxt = await loadAnagramsToTxt();
-  const localAnagramMap = txtToMap(anagramTxt);
+  const localAnagramMap = fileTxtToHashMap(anagramTxt);
 
   let searchFor = document.getElementById('search').value;
   let sortedWordKey = searchFor.split('').sort().join('').toLowerCase();
@@ -80,19 +80,19 @@ async function loadAnagramsToTxt() {
   return text;
 }
 
-function txtToMap(txt) {
-  let map = new Map();
-  let lines = txt.split('\n');
-  lines.forEach(function (line) {
+function fileTxtToHashMap(txt) {
+  let anagramMap = new Map();
+  let anagrams = txt.split('\n');
+  anagrams.forEach(function (anagram) {
     try {
-      vals = line.split(',');
-      map.set(vals[0], vals.slice(1));
+      vals = anagram.split(',');
+      anagramMap.set(vals[0], vals.slice(1));
     } catch (err) {
-      console.log(`Error parsing ${line}: ${err}`);
+      console.log(`Error parsing ${anagram}: ${err}`);
     }
     
   });
-  return map;
+  return anagramMap;
 }
 
 function styleOutput(input) {
