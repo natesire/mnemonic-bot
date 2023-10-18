@@ -1,5 +1,6 @@
 import typewriter from './typewriter.png';
 import './App.css';
+import anagram from './Anagram.js';
 
 function App() {
   return (
@@ -30,12 +31,8 @@ function App() {
 
 const handleClickOnGenerateButton = async () => {
 
-  await loadAnagrams()
-
-  // in case the backend is unresponsive, use this local map
-  let localAnagramMap = new Map();
-  localAnagramMap.set('dstuy', ['dusty', 'study']);
-  localAnagramMap.set('eilv', ['live', 'evil']);
+  let anagramTxt = await loadAnagramsToTxt();
+  const localAnagramMap = txtToMap(anagramTxt);
 
   let searchFor = document.getElementById('search').value;
   let sortedWordKey = searchFor.split('').sort().join('').toLowerCase();
@@ -64,22 +61,38 @@ const handleClickOnGenerateButton = async () => {
   document.getElementById('searchFor').innerHTML = "search for: " + searchFor;
 }
 
-async function loadAnagrams() {
+async function loadAnagramsToTxt() {
+  let text = "";
   let sources = [];
   // easy to extend
+  sources.push("http://localhost:3000/anagrams/anagramMap.sample.txt");
   sources.push("http://localhost:3000/anagrams/anagramMap.txt");
   sources.push("http://localhost:3000/");
 
   sources.forEach(async function (source) {
     try {
       let response = await fetch(source);
-      let text = await response.text();
+      text = await response.text();
     } catch (err) {
       console.log(`Error fetching ${source}: ${err}`);
     }
   });
+  return text;
+}
 
-
+function txtToMap(txt) {
+  let map = new Map();
+  let lines = txt.split('\n');
+  lines.forEach(function (line) {
+    try {
+      vals = line.split(',');
+      map.set(vals[0], vals.slice(1));
+    } catch (err) {
+      console.log(`Error parsing ${line}: ${err}`);
+    }
+    
+  });
+  return map;
 }
 
 function styleOutput(input) {

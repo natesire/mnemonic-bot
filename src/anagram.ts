@@ -17,7 +17,7 @@ export class Anagram {
 
     //this.client = createClient();
     //this.client.on('error', (err) => console.log('Redis Client Error', err));
-
+    this.anagramMap = new Map<string, string>();
     this.preLoadMap();
   }
 

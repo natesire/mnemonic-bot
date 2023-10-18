@@ -49,6 +49,7 @@ var Anagram = /** @class */ (function () {
         }*/
         //this.client = createClient();
         //this.client.on('error', (err) => console.log('Redis Client Error', err));
+        this.anagramMap = new Map();
         this.preLoadMap();
     }
     Anagram.prototype.preLoadMap = function () {
