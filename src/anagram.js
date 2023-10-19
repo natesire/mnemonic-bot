@@ -40,26 +40,58 @@ exports.Anagram = void 0;
 var fs = require("fs"); // use this for esmodules and typescript
 var Anagram = /** @class */ (function () {
     function Anagram(dictionaryFile) {
+        var _this = this;
         this.dictionaryFile = dictionaryFile;
         this.dictionary = [];
-        this.mapFile = 'anagramMap.txt';
+        // easier to read tweak vars up front
+        this.anagramSources = ["http://localhost:3000/", "http://localhost:3000/anagrams/anagram.txt", "http://localhost:3000/anagrams/anagram.sample.txt"];
         this.dictionaryFile = dictionaryFile; // loads dictionary file
         /*if (!fs.existsSync(this.dictionaryFile)) {
           throw new Error('File not found!');
         }*/
-        //this.client = createClient();
-        //this.client.on('error', (err) => console.log('Redis Client Error', err));
         this.anagramMap = new Map();
-        this.preLoadMap();
+        this.anagramSources.forEach(function (source) { return _this.loadAnagrams(source); });
     }
-    Anagram.prototype.preLoadMap = function () {
-        var _this = this;
-        var mapFile = fs.readFileSync(this.mapFile, 'utf8').split('\r\n');
-        mapFile.forEach(function (line) {
-            var firstLineArr = line.split(',');
-            var key = firstLineArr[0];
-            var wordsCommaSeperated = firstLineArr.splice(1).join(',');
-            _this.anagramMap.set(key, wordsCommaSeperated);
+    Anagram.prototype.loadAnagrams = function (source) {
+        return __awaiter(this, void 0, void 0, function () {
+            var responseTextMultiLine, lines;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.fetch(source)];
+                    case 1:
+                        responseTextMultiLine = _a.sent();
+                        lines = responseTextMultiLine === null || responseTextMultiLine === void 0 ? void 0 : responseTextMultiLine.split('\r\n');
+                        lines === null || lines === void 0 ? void 0 : lines.forEach(function (line) {
+                            var anagramEntry = line.split(',');
+                            _this.anagramMap.set(anagramEntry[0], anagramEntry.slice(1).join(','));
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Anagram.prototype.fetch = function (source) {
+        return __awaiter(this, void 0, void 0, function () {
+            var responseTextMultiLine, response, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, fetch(source)];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.text()];
+                    case 2:
+                        responseTextMultiLine = _a.sent();
+                        return [2 /*return*/, responseTextMultiLine];
+                    case 3:
+                        err_1 = _a.sent();
+                        console.log("Error fetching ".concat(source, ": ").concat(err_1));
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
         });
     };
     Anagram.prototype.setup = function () {
@@ -96,12 +128,13 @@ var Anagram = /** @class */ (function () {
             });
         });
     };
-    Anagram.prototype.findAnagrams = function (wordKey) {
-        var sortedWordKey = this.sortWord(wordKey);
+    Anagram.prototype.search = function (word) {
+        var sortedWordKey = this.sortStr(word);
         var anagrams = this.anagramMap.get(sortedWordKey);
-        return new Promise(function (resolve, reject) {
-            resolve(anagrams || 'Anagrams not found');
-        });
+        return anagrams || 'Anagrams not found';
+        /*return new Promise((resolve, reject) => {
+          resolve(anagrams || 'Anagrams not found');
+        });*/
     };
     Anagram.prototype.loadDictionaryIntoArray = function () {
         var dictionary = fs.readFileSync(this.dictionaryFile, 'utf8').split('\r\n');
@@ -127,7 +160,7 @@ var Anagram = /** @class */ (function () {
                 // node js doesn't have tail call recursion so we use a loop
                 for (_i = 0, dictionary_1 = dictionary; _i < dictionary_1.length; _i++) {
                     word = dictionary_1[_i];
-                    sortedWordKey = this.sortWord(word);
+                    sortedWordKey = this.sortStr(word);
                     //let preExistingWordsInValue = await this.readAnagramsFromRedis(sortedWordKey);
                     //await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.comma(word));
                 }
@@ -139,9 +172,8 @@ var Anagram = /** @class */ (function () {
         if (word)
             return ",".concat(word);
     };
-    // ascending order, a to z
-    // can try quick sort or radix sort for longer words
-    Anagram.prototype.sortWord = function (word) {
+    // NodeJS is probably using merge sort
+    Anagram.prototype.sortStr = function (word) {
         return word.split('').sort().join('');
     };
     return Anagram;

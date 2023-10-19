@@ -1,6 +1,6 @@
 import typewriter from './typewriter.png';
 import './App.css';
-import anagram from './Anagram.js';
+import Anagram from './Anagram';
 
 function App() {
   return (
@@ -30,35 +30,32 @@ function App() {
 }
 
 const handleClickOnGenerateButton = async () => {
-
-  let anagramTxt = await loadAnagramsToTxt();
-  const localAnagramMap = fileTxtToHashMap(anagramTxt);
+  try {
+  let anagram = new Anagram();
+  let localAnagramMap = anagram.anagramMap;
 
   let searchFor = document.getElementById('search').value;
-  let sortedWordKey = searchFor.split('').sort().join('').toLowerCase();
+  let sortedWordKey = sortedWordKey(searchFor);
   document.getElementById('searchFor').innerHTML = "searching..."
 
-  //const responseFromBackend = await fetch("http://localhost:3000/?word=" + searchFor);
-  //const anagramsJSON = await responseFromBackend.json();
-  //output = anagramsJSON.anagramsResults;
-
-  // fetch with a timeout of 10 seconds
-  //const controller = new AbortController();
-  //const timeout = setTimeout(() => { controller.abort(); }, 10000);
-  //const responseFromBackend = await fetch("http://localhost:3000/?word=" + searchFor, { signal: controller.signal });
-
-
   //fuzzy match one letter
-  sortedWordKey += "u"
-  sortedWordKey = sortedWordKey.split('').sort().join('').toLowerCase();
+  //sortedWordKey += "u"
+  //sortedWordKey = sortWordKey(sortedWordKey);
 
-  let output = localAnagramMap.get(sortedWordKey) || 'no anagrams found';
+  let anagramResults = localAnagramMap.get(sortedWordKey) || 'no anagrams found';
 
   // the view is responsible for formatting the output
-  output = styleOutput(output);
+  anagramResults = styleOutput(anagramResults);
 
-  document.getElementById('anagramsResults').innerHTML = output;
+  document.getElementById('anagramsResults').innerHTML = anagramResults;
   document.getElementById('searchFor').innerHTML = "search for: " + searchFor;
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
+}
+
+function sortWordKey(word) {
+  return word.split('').sort().join('').toLowerCase();
 }
 
 async function loadAnagramsToTxt() {

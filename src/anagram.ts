@@ -3,11 +3,12 @@ import * as fs from 'fs';    // use this for esmodules and typescript
 
 export class Anagram {
   public dictionary: string[] = []; 
-  public sortedDictionary; //: Map<string, string>;
+  public sortedDictionary;
   public dictionaryArr: string[];
   public client: any;
   public anagramMap: Map<string, string>;
-  public mapFile: string = 'anagramMap.txt';
+  // easier to read tweak vars up front
+  public anagramSources = ["http://localhost:3000/", "http://localhost:3000/anagrams/anagram.txt", "http://localhost:3000/anagrams/anagram.sample.txt"];
   
   constructor(public dictionaryFile: string) {
     this.dictionaryFile = dictionaryFile; // loads dictionary file
@@ -15,20 +16,28 @@ export class Anagram {
       throw new Error('File not found!');
     }*/
 
-    //this.client = createClient();
-    //this.client.on('error', (err) => console.log('Redis Client Error', err));
     this.anagramMap = new Map<string, string>();
-    this.preLoadMap();
+    this.anagramSources.forEach((source) => this.loadAnagrams(source));
   }
 
-  preLoadMap() {
-    let mapFile = fs.readFileSync(this.mapFile, 'utf8').split('\r\n');
-    mapFile.forEach((line) => {
-      let firstLineArr = line.split(',');
-      let key = firstLineArr[0];
-      let wordsCommaSeperated = firstLineArr.splice(1).join(',');
-      this.anagramMap.set(key, wordsCommaSeperated);
+  async loadAnagrams(source) {
+    let responseTextMultiLine = await this.fetch(source);
+    let lines = responseTextMultiLine?.split('\r\n');
+    lines?.forEach((line) => {
+      let anagramEntry = line.split(',');
+      this.anagramMap.set(anagramEntry[0], anagramEntry.slice(1).join(','));
     });
+  }
+
+  async fetch(source: string) : Promise<string | undefined> {
+    let responseTextMultiLine : string;
+    try {
+      let response = await fetch(source); // timeout?, json?
+      responseTextMultiLine = await response.text();
+      return responseTextMultiLine;
+    } catch (err) {
+      console.log(`Error fetching ${source}: ${err}`);
+    }
   }
 
   async setup() {
@@ -55,13 +64,13 @@ export class Anagram {
     //await this.client.set(wordKey, anagramsUniqueCommaSeperated);
   }
 
-  findAnagrams(wordKey: string) : Promise<string> {
-    let sortedWordKey = this.sortWord(wordKey);
+  search(word: string) : string {
+    let sortedWordKey = this.sortStr(word);
     let anagrams = this.anagramMap.get(sortedWordKey);
-
-    return new Promise((resolve, reject) => {
+    return anagrams || 'Anagrams not found';
+    /*return new Promise((resolve, reject) => {
       resolve(anagrams || 'Anagrams not found');
-    });
+    });*/
   }
 
   loadDictionaryIntoArray(): string[] {
@@ -88,7 +97,7 @@ export class Anagram {
     // node js doesn't have tail call recursion so we use a loop
     for(let word of dictionary) {
       // will compare words by sorting each char in ascending order
-      let sortedWordKey = this.sortWord(word);
+      let sortedWordKey = this.sortStr(word);
       //let preExistingWordsInValue = await this.readAnagramsFromRedis(sortedWordKey);
       //await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.comma(word));
     }
@@ -98,9 +107,8 @@ export class Anagram {
     if(word) return `,${word}`;
   }
   
-  // ascending order, a to z
-  // can try quick sort or radix sort for longer words
-  sortWord(word: string) {
+  // NodeJS is probably using merge sort
+  sortStr(word: string) : string {
     return word.split('').sort().join(''); 
   }
 }
