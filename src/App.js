@@ -1,6 +1,6 @@
 import typewriter from './typewriter.png';
 import './App.css';
-import Anagram from './Anagram';
+import { Anagram } from './lib/Anagram';
 
 function App() {
   return (

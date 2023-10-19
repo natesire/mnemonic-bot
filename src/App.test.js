@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
-import { Anagram } from './Anagram';
+import { Anagram } from './lib/Anagram';
 
 it('new .Anagram', () => {
   let anagram = new Anagram();

@@ -35,5 +35,10 @@ describe("should find anagram", () => {
     it('validate word', () => __awaiter(void 0, void 0, void 0, function* () {
         expect(anagram.validateAlpha('[object promise]')).toEqual(false);
     }));
+    it('DEBUG fetches anagrams', () => __awaiter(void 0, void 0, void 0, function* () {
+        let response = yield fetch('http://localhost:3000/anagrams/anagram.txt');
+        let responseTextMultiLine = yield response.text();
+        expect(responseTextMultiLine).toContain('cinema');
+    }));
 });
 //# sourceMappingURL=index.spec.js.map
