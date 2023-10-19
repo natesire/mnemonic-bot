@@ -3,33 +3,53 @@ import * as fs from 'fs';    // use this for esmodules and typescript
 
 export class Anagram {
   public dictionary: string[] = []; 
-  public sortedDictionary;
-  public dictionaryArr: string[];
+  public sortedDictionary : string[] = [];
+  public dictionaryArr: string[] | undefined;
   public client: any;
   public anagramMap: Map<string, string>;
   // easier to read tweak vars up front
   public anagramSources = ["http://localhost:3000/", "http://localhost:3000/anagrams/anagram.txt", "http://localhost:3000/anagrams/anagram.sample.txt"];
   
   constructor(public dictionaryFile: string) {
+    this.anagramMap = new Map<string, string>();
     this.dictionaryFile = dictionaryFile; // loads dictionary file
     /*if (!fs.existsSync(this.dictionaryFile)) {
       throw new Error('File not found!');
     }*/
 
-    this.anagramMap = new Map<string, string>();
+    // open closed principle (SOLID)
+    Object.freeze(this.anagramSources);
+    
     this.anagramSources.forEach((source) => this.loadAnagrams(source));
   }
 
-  async loadAnagrams(source) {
-    let responseTextMultiLine = await this.fetch(source);
-    let lines = responseTextMultiLine?.split('\r\n');
-    lines?.forEach((line) => {
-      let anagramEntry = line.split(',');
-      this.anagramMap.set(anagramEntry[0], anagramEntry.slice(1).join(','));
-    });
+  async loadAnagrams(source: string) {
+    let lines;
+    try {
+      let responseTextMultiLine = await this.fetchAnagram(source);
+      lines = responseTextMultiLine?.split('\r\n');
+      lines?.forEach((line) => {
+        this.lineToMap(line);
+      });
+    } catch (err) {
+      console.log(`Error fetching ${source}: ${err}`);
+    }
   }
 
-  async fetch(source: string) : Promise<string | undefined> {
+  lineToMap(line: string) {
+    try {
+      let anagramEntry = line.split(',');
+      this.anagramMap.set(anagramEntry[0], this.nToEnd(1, anagramEntry).join(','));
+    } catch (err) {
+      console.log(`Error parsing line: ${line}`);
+    }
+  }
+
+  nToEnd(n : number, arr : string[]) {
+    return arr.slice(n);
+  }
+
+  async fetchAnagram(source: string) : Promise<string | undefined> {
     let responseTextMultiLine : string;
     try {
       let response = await fetch(source); // timeout?, json?
@@ -40,10 +60,11 @@ export class Anagram {
     }
   }
 
+
   async setup() {
     //await this.client.connect();
     let dictionaryArr = this.loadDictionaryIntoArray();
-    this.sortedDictionary = await this.sortDictionaryWordsIntoRedis(dictionaryArr);
+    //this.sortedDictionary = await this.sortDictionaryWordsIntoRedis(dictionaryArr);
   }
 
   // how to preload the dictionary?

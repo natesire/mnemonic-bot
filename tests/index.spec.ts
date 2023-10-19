@@ -1,4 +1,4 @@
-import { Anagram } from '../../backend/source/anagram.js';
+import { Anagram } from '../src/Anagram.js';
 
 describe("should find anagram", () => {
 
@@ -23,14 +23,20 @@ describe("should find anagram", () => {
   // test the final result is less brittle
 
   it('gets cinema for iceman', async () => {
-    expect(await anagram.findAnagrams('iceman')).toContain('cinema');
+    expect(await anagram.search('iceman')).toContain('cinema');
   });
 
   it('gets iceman for cinema', async () => {
-    expect(await anagram.findAnagrams('cinema')).toContain('iceman');
+    expect(await anagram.search('cinema')).toContain('iceman');
   });
 
   it('validate word', async () => {
     expect(anagram.validateAlpha('[object promise]')).toEqual(false);
+  });
+
+  it('DEBUG fetches anagrams', async () => {
+    let response = await fetch('http://localhost:3000/anagrams/anagram.txt');
+    let responseTextMultiLine = await response.text();
+    expect(responseTextMultiLine).toContain('cinema');
   });
 });

@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,108 +31,72 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Anagram = void 0;
-var fs = require("fs"); // use this for esmodules and typescript
-var Anagram = /** @class */ (function () {
-    function Anagram(dictionaryFile) {
-        var _this = this;
+const fs = __importStar(require("fs")); // use this for esmodules and typescript
+class Anagram {
+    constructor(dictionaryFile) {
         this.dictionaryFile = dictionaryFile;
         this.dictionary = [];
+        this.sortedDictionary = [];
         // easier to read tweak vars up front
         this.anagramSources = ["http://localhost:3000/", "http://localhost:3000/anagrams/anagram.txt", "http://localhost:3000/anagrams/anagram.sample.txt"];
+        this.anagramMap = new Map();
         this.dictionaryFile = dictionaryFile; // loads dictionary file
         /*if (!fs.existsSync(this.dictionaryFile)) {
           throw new Error('File not found!');
         }*/
-        this.anagramMap = new Map();
-        this.anagramSources.forEach(function (source) { return _this.loadAnagrams(source); });
+        // open closed principle (SOLID)
+        Object.freeze(this.anagramSources);
+        this.anagramSources.forEach((source) => this.loadAnagrams(source));
     }
-    Anagram.prototype.loadAnagrams = function (source) {
-        return __awaiter(this, void 0, void 0, function () {
-            var responseTextMultiLine, lines;
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.fetch(source)];
-                    case 1:
-                        responseTextMultiLine = _a.sent();
-                        lines = responseTextMultiLine === null || responseTextMultiLine === void 0 ? void 0 : responseTextMultiLine.split('\r\n');
-                        lines === null || lines === void 0 ? void 0 : lines.forEach(function (line) {
-                            var anagramEntry = line.split(',');
-                            _this.anagramMap.set(anagramEntry[0], anagramEntry.slice(1).join(','));
-                        });
-                        return [2 /*return*/];
-                }
-            });
+    loadAnagrams(source) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let lines;
+            try {
+                let responseTextMultiLine = yield this.fetch(source);
+                lines = responseTextMultiLine === null || responseTextMultiLine === void 0 ? void 0 : responseTextMultiLine.split('\r\n');
+                lines === null || lines === void 0 ? void 0 : lines.forEach((line) => {
+                    this.lineToMap(line);
+                });
+            }
+            catch (err) {
+                console.log(`Error fetching ${source}: ${err}`);
+            }
         });
-    };
-    Anagram.prototype.fetch = function (source) {
-        return __awaiter(this, void 0, void 0, function () {
-            var responseTextMultiLine, response, err_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, fetch(source)];
-                    case 1:
-                        response = _a.sent();
-                        return [4 /*yield*/, response.text()];
-                    case 2:
-                        responseTextMultiLine = _a.sent();
-                        return [2 /*return*/, responseTextMultiLine];
-                    case 3:
-                        err_1 = _a.sent();
-                        console.log("Error fetching ".concat(source, ": ").concat(err_1));
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
-                }
-            });
+    }
+    lineToMap(line) {
+        try {
+            let anagramEntry = line.split(',');
+            this.anagramMap.set(anagramEntry[0], this.nToEnd(1, anagramEntry).join(','));
+        }
+        catch (err) {
+            console.log(`Error parsing line: ${line}`);
+        }
+    }
+    nToEnd(n, arr) {
+        return arr.slice(n);
+    }
+    fetch(source) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let responseTextMultiLine;
+            try {
+                let response = yield fetch(source); // timeout?, json?
+                responseTextMultiLine = yield response.text();
+                return responseTextMultiLine;
+            }
+            catch (err) {
+                console.log(`Error fetching ${source}: ${err}`);
+            }
         });
-    };
-    Anagram.prototype.setup = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var dictionaryArr, _a;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        dictionaryArr = this.loadDictionaryIntoArray();
-                        _a = this;
-                        return [4 /*yield*/, this.sortDictionaryWordsIntoRedis(dictionaryArr)];
-                    case 1:
-                        _a.sortedDictionary = _b.sent();
-                        return [2 /*return*/];
-                }
-            });
+    }
+    setup() {
+        return __awaiter(this, void 0, void 0, function* () {
+            //await this.client.connect();
+            let dictionaryArr = this.loadDictionaryIntoArray();
+            //this.sortedDictionary = await this.sortDictionaryWordsIntoRedis(dictionaryArr);
         });
-    };
+    }
     // how to preload the dictionary?
     /*
     async readAnagramsFromRedis(sortedWordKey: string) : Promise<string> {
@@ -118,64 +105,59 @@ var Anagram = /** @class */ (function () {
       let anagramsWithCommas = anagramsArr.join(',');
       return anagramsWithCommas;
     }*/
-    Anagram.prototype.setAnagrams = function (wordKey, anagramsCommaSeperated) {
-        return __awaiter(this, void 0, void 0, function () {
-            var anagrams, cleaned;
-            return __generator(this, function (_a) {
-                anagrams = anagramsCommaSeperated.split(',');
-                cleaned = anagrams.filter(function (item) { return item.match(/^[a-z]+/); });
-                return [2 /*return*/];
-            });
+    setAnagrams(wordKey, anagramsCommaSeperated) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let anagrams = anagramsCommaSeperated.split(',');
+            let cleaned = anagrams.filter((item) => item.match(/^[a-z]+/));
+            //let uniqueAnagrams = [...new Set(cleaned)];
+            //let anagramsUniqueCommaSeperated = uniqueAnagrams.join(',');
+            //await this.client.set(wordKey, anagramsUniqueCommaSeperated);
         });
-    };
-    Anagram.prototype.search = function (word) {
-        var sortedWordKey = this.sortStr(word);
-        var anagrams = this.anagramMap.get(sortedWordKey);
+    }
+    search(word) {
+        let sortedWordKey = this.sortStr(word);
+        let anagrams = this.anagramMap.get(sortedWordKey);
         return anagrams || 'Anagrams not found';
         /*return new Promise((resolve, reject) => {
           resolve(anagrams || 'Anagrams not found');
         });*/
-    };
-    Anagram.prototype.loadDictionaryIntoArray = function () {
+    }
+    loadDictionaryIntoArray() {
         var dictionary = fs.readFileSync(this.dictionaryFile, 'utf8').split('\r\n');
         return dictionary;
-    };
-    Anagram.prototype.validateAlpha = function (word) {
+    }
+    validateAlpha(word) {
         if (word.match(/^[a-z]+$/)) {
             return true;
         }
         return false;
-    };
-    Anagram.prototype.validateValues = function (word) {
+    }
+    validateValues(word) {
         if (word.match(/^[a-z]+,?$/)) {
             return true;
         }
         return false;
-    };
+    }
     // sorts the entire file and stores it in a hash map
-    Anagram.prototype.sortDictionaryWordsIntoRedis = function (dictionary) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _i, dictionary_1, word, sortedWordKey;
-            return __generator(this, function (_a) {
-                // node js doesn't have tail call recursion so we use a loop
-                for (_i = 0, dictionary_1 = dictionary; _i < dictionary_1.length; _i++) {
-                    word = dictionary_1[_i];
-                    sortedWordKey = this.sortStr(word);
-                    //let preExistingWordsInValue = await this.readAnagramsFromRedis(sortedWordKey);
-                    //await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.comma(word));
-                }
-                return [2 /*return*/];
-            });
+    sortDictionaryWordsIntoRedis(dictionary) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // node js doesn't have tail call recursion so we use a loop
+            for (let word of dictionary) {
+                // will compare words by sorting each char in ascending order
+                let sortedWordKey = this.sortStr(word);
+                //let preExistingWordsInValue = await this.readAnagramsFromRedis(sortedWordKey);
+                //await this.setAnagrams(sortedWordKey, preExistingWordsInValue + this.comma(word));
+            }
         });
-    };
-    Anagram.prototype.preCommaWord = function (word) {
+    }
+    preCommaWord(word) {
         if (word)
-            return ",".concat(word);
-    };
+            return `,${word}`;
+    }
     // NodeJS is probably using merge sort
-    Anagram.prototype.sortStr = function (word) {
+    sortStr(word) {
         return word.split('').sort().join('');
-    };
-    return Anagram;
-}());
+    }
+}
 exports.Anagram = Anagram;
+//# sourceMappingURL=Anagram.js.map
