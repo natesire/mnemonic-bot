@@ -8,8 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const Anagram_1 = require("../Anagram");
+const node_fetch_1 = __importDefault(require("node-fetch"));
 describe("should find anagram", () => {
     let anagram = new Anagram_1.Anagram('./dictionary.test.txt');
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
@@ -36,7 +40,7 @@ describe("should find anagram", () => {
         expect(anagram.validateAlpha('[object promise]')).toEqual(false);
     }));
     it('DEBUG fetches anagrams', () => __awaiter(void 0, void 0, void 0, function* () {
-        let response = yield fetch('http://localhost:3000/anagrams/anagram.txt');
+        let response = yield (0, node_fetch_1.default)('http://localhost:3000/anagrams/anagram.txt');
         let responseTextMultiLine = yield response.text();
         expect(responseTextMultiLine).toContain('cinema');
     }));

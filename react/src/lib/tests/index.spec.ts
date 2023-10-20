@@ -1,4 +1,5 @@
 import { Anagram } from '../Anagram';
+import fetch from 'node-fetch';
 
 describe("should find anagram", () => {
 let anagram = new Anagram('./dictionary.test.txt');

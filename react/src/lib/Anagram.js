@@ -123,6 +123,8 @@ class Anagram {
         });*/
     }
     loadDictionaryIntoArray() {
+        // get current working directory
+        let cwd = console.log(process.cwd());
         var dictionary = fs.readFileSync(this.dictionaryFile, 'utf8').split('\r\n');
         return dictionary;
     }
