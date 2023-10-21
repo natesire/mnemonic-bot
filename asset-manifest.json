@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/anagrams/static/css/main.7be95278.css",
-    "main.js": "/anagrams/static/js/main.d75cb9c4.js",
-    "static/js/787.cda612ba.chunk.js": "/anagrams/static/js/787.cda612ba.chunk.js",
-    "static/media/typewriter.png": "/anagrams/static/media/typewriter.6dba0657120cbeb899e7.png",
-    "index.html": "/anagrams/index.html",
-    "main.7be95278.css.map": "/anagrams/static/css/main.7be95278.css.map",
-    "main.d75cb9c4.js.map": "/anagrams/static/js/main.d75cb9c4.js.map",
-    "787.cda612ba.chunk.js.map": "/anagrams/static/js/787.cda612ba.chunk.js.map"
+    "main.css": "/static/css/main.b8701b33.css",
+    "main.js": "/static/js/main.be72543a.js",
+    "static/js/787.774e1957.chunk.js": "/static/js/787.774e1957.chunk.js",
+    "static/media/typewriter.png": "/static/media/typewriter.6dba0657120cbeb899e7.png",
+    "index.html": "/index.html",
+    "main.b8701b33.css.map": "/static/css/main.b8701b33.css.map",
+    "main.be72543a.js.map": "/static/js/main.be72543a.js.map",
+    "787.774e1957.chunk.js.map": "/static/js/787.774e1957.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7be95278.css",
-    "static/js/main.d75cb9c4.js"
+    "static/css/main.b8701b33.css",
+    "static/js/main.be72543a.js"
   ]
 }
