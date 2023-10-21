@@ -95,8 +95,6 @@ export class Anagram {
   }
 
   loadDictionaryIntoArray(): string[] {
-    // get current working directory
-    let cwd = console.log(process.cwd());
     var dictionary: string[] = fs.readFileSync(this.dictionaryFile, 'utf8').split('\r\n');
     return dictionary;
   }
