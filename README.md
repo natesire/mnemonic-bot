@@ -1,10 +1,10 @@
-# Anagrams Plugged into Chatbot
+# Chatbot
 
 Chat GPT doesn't check if the anagrams are actual words. This is better.
 
 View the frontend on ReactJS at Github Pages
 
-https://natesire.github.io/anagrams/
+https://natesire.github.io/chatbot
 
 ![alt text](https://github.com/natesire/anagrams/blob/main/public/githubPages.png)
 
