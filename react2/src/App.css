@@ -2,15 +2,49 @@
   text-align: center;
 }
 
+:root {
+  --font-family: Arial, sans-serif;
+  --font-size: 16px;
+  --text-color: #333;
+  --line-height: 1.5;
+  --input-width: 500px;
+}
+
 /* less coupled to App.js than using a class */
 input[type="submit"] {
-  width: 33%;
+  width: var(--input-width);
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: inherit;
+}
+
+input[type="text"] {
+  width: var(--input-width);
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: inherit;
+}
+
+input[type="textarea"] {
+  width: var(--input-width);
+  height: 500px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: inherit;
+}
+
+#chat {
+  width: var(--input-width);
+  height: 500px;
 }
 
 /* easier to read with space */

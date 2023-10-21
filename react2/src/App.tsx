@@ -10,20 +10,21 @@ function App() {
         <div className="container">
         <img src={typewriter} className="typewriter" alt="logo" />
         </div>
-        <p>Search for Anagrams</p>
+        <p>Enter Message to Diddo</p>
         <input
+          type="text"
           id="search"
           placeholder="enter word or letters"
         ></input>
         <input
           type="submit"
           className="myButton"
-          value="Search"
+          value="Submit"
           onClick={handleClickOnGenerateButton}
         ></input>
+        <textarea id="chat"></textarea>
         <p id="searchFor" className="searchFor"></p>
         <p id="anagramsResults" className="anagramResults"></p>
-        <a href='https://react.dev/' className="">Built on ReactJS</a>
       </header>
     </div>
   );
