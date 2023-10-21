@@ -11,7 +11,6 @@ function App() {
         <p>Search for Anagrams</p>
         <input
           id="search"
-          className="searchField"
           placeholder="enter word or letters"
         ></input>
         <input

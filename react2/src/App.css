@@ -13,6 +13,12 @@ input[type="submit"] {
   font-size: inherit;
 }
 
+/* easier to read with space */
+.moreSpace {
+  margin: 5px;
+  font-family: monospace;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
