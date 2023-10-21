@@ -1,6 +1,6 @@
-# Anagrams for Typos
+# Anagrams Plugged into Chatbot
 
-This anagram tool helps identify typos from mixed up letters.
+Chat GPT doesn't check if the anagrams are actual words. This is better.
 
 View the frontend on ReactJS at Github Pages
 
