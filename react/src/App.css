@@ -23,7 +23,6 @@ input[type="submit"] {
 
 input[type="text"] {
   width: var(--input-width);
-  padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
   border: 1px solid #ccc;
@@ -34,12 +33,26 @@ input[type="text"] {
 input[type="textarea"] {
   width: var(--input-width);
   height: 500px;
+  padding: 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: inherit;
+}
+
+.command {
+  width: var(--input-width);
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: inherit;
+}
+
+.shortcut {
+  width: 20px;
 }
 
 #chat {

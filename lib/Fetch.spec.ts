@@ -1,4 +1,4 @@
-//import fetch from './Fetch';
+import fetch from 'node-fetch';
 
 describe('fetch', () => {
   it('should fetch data from the server', async () => {
