@@ -43,9 +43,6 @@ class Anagram {
         this.anagramSources = ["http://localhost:3000/", "http://localhost:3000/anagrams/anagram.txt", "http://localhost:3000/anagrams/anagram.sample.txt"];
         this.anagramMap = new Map();
         this.dictionaryFile = dictionaryFile; // loads dictionary file
-        /*if (!fs.existsSync(this.dictionaryFile)) {
-          throw new Error('File not found!');
-        }*/
         // open closed principle (SOLID)
         Object.freeze(this.anagramSources);
         this.anagramSources.forEach((source) => this.loadAnagrams(source));

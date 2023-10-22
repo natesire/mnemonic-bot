@@ -13,9 +13,6 @@ export class Anagram {
   constructor(public dictionaryFile: string) {
     this.anagramMap = new Map<string, string>();
     this.dictionaryFile = dictionaryFile; // loads dictionary file
-    /*if (!fs.existsSync(this.dictionaryFile)) {
-      throw new Error('File not found!');
-    }*/
 
     // open closed principle (SOLID)
     Object.freeze(this.anagramSources);
