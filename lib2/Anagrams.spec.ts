@@ -11,8 +11,8 @@ it("should return map for Anagrams collection", () => {
 
 it("should return map for Anagrams collection", () => {
     let firstRecord = new StrArr("act,cat,tac");
-    let m = new Map();
-    m.set('act', firstRecord);
-    let anagrams = new Anagrams(m);
+    let map = new Map();
+    map.set('act', firstRecord);
+    let anagrams = new Anagrams(map);
     expect(anagrams.map.get('act')).toEqual(firstRecord);
 });
