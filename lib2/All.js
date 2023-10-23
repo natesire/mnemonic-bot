@@ -9,13 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FetchAll = void 0;
+exports.All = void 0;
 // proven way to fetch data from multiple sources
-class FetchAll {
-    constructor(sources, fetch) {
+class All {
+    constructor(fetch, sources) {
         this.sources = sources;
         this.fetch = fetch;
-        this.load = this.fetchAll(sources);
     }
     fetchFirst() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -24,8 +23,8 @@ class FetchAll {
             return response;
         });
     }
-    fetchAll(sources) {
-        sources.forEach((source) => this.fetch(source));
+    fetchIt() {
+        return this.fetch(this.sources[0]);
     }
     process(response) {
         response.then((response) => __awaiter(this, void 0, void 0, function* () {
@@ -33,4 +32,4 @@ class FetchAll {
         }));
     }
 }
-exports.FetchAll = FetchAll;
+exports.All = All;

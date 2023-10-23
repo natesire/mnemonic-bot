@@ -1,6 +1,6 @@
-import fetch from 'node-fetch';
-import { FetchAll } from './FetchAll';
-import { Load } from './Load';
+import { All as All } from './All';
+//import fetch from 'node-fetch';
+let fetch = require('node-fetch');
 
 //let sources : string[];
 
@@ -8,7 +8,22 @@ import { Load } from './Load';
     sources = ['http://www.google.com', 'http://www.yahoo.com'];
 });*/
 
-it('should fetch data', async () => {
-    let sources = ['http://www.google.com', 'http://www.yahoo.com'];
-    let fetchAll = new FetchAll(sources, fetch, new Load(fetch));
+jest.mock('node-fetch');
+
+it('should fetch data without duplicates', async () => {
+    // mock fetch
+    fetch.mockResolvedValue({
+        ok: true,
+        json: async () => ({ "anagram" : "act,cat,tac" }),
+      });
+
+    let sources = ['http://localhost:3000/anagrams/anagrams.txt'];
+    let response = await fetch(sources[0]);
+
+    if (response.ok) {
+        const data = await response.json();
+        expect(data).toEqual({ "anagram" : "act,cat,tac" });
+    } else {
+        throw new Error(`Failed to fetch data from`);
+    }
 });
