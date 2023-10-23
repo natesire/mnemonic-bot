@@ -1,23 +1,28 @@
 {
-  "name": "lib",
+  "name": "lib2",
   "version": "1.0.0",
-  "description": "My standard lib",
-  "main": "Anagram.js",
+  "description": "",
+  "main": "index.js",
   "type": "module",
-  "directories": {
-    "test": "tests"
-  },
   "scripts": {
     "test": "jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/preset-env": "^7.23.2",
     "@types/jest": "^29.5.6",
-    "fs": "*",
+    "@types/node-fetch": "^2.6.7",
+    "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
-    "node-fetch": "^3.3.2",
-    "ts-node": "^10.9.1",
+    "natejs": "https://github.com/natesire/natejs",
+    "node-fetch": "^2.7.0",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   }
 }
