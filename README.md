@@ -4,7 +4,7 @@ Customize your own chatbot.
 
 View the frontend on ReactJS at Github Pages
 
-https://natesire.github.io/chatbot
+https://natesire.github.io/diddo
 
 ![alt text](https://github.com/natesire/anagrams/blob/main/public/githubPages.png)
 
