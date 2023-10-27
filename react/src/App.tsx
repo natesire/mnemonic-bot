@@ -3,10 +3,10 @@ import logo from './logo.svg';
 import typewriter from './typewriter.png'
 import './App.css';
 
-import { Anagrams } from '../../lib//anagrams';
+//import { Anagrams } from '../../lib//anagrams';
 
 function hello() {
-  let a = new Anagrams();
+  //let a = new Anagrams();
 }
 
 function App() {
