@@ -1,6 +1,6 @@
-# Chatbot
+# Diddo.ai Chatbot
 
-Chat GPT doesn't check if the anagrams are actual words. This is better.
+Customize your own chatbot.
 
 View the frontend on ReactJS at Github Pages
 
