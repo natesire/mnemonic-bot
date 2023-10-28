@@ -1,0 +1,17 @@
+{
+  "name": "experiment",
+  "version": "1.0.0",
+  "description": "experiment with ideas",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Nate Sire",
+  "license": "MIT",
+  "dependencies": {
+    "natejs4": "github:natesire/natejs4",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

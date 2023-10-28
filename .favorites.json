@@ -1,0 +1,81 @@
+[
+    {
+        "type": "Group",
+        "name": "npm",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "aOvRycswDx0ZIAiX"
+    },
+    {
+        "type": "File",
+        "name": "c:\\Pro\\diddo\\react\\node_modules\\natejs4\\src\\index.d.ts",
+        "parent_id": "aOvRycswDx0ZIAiX",
+        "fsPath": "c:\\Pro\\diddo\\react\\node_modules\\natejs4\\src\\index.d.ts",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "Qcvm4FWMNjX1uZg7"
+    },
+    {
+        "type": "File",
+        "name": "c:\\Pro\\diddo\\react\\node_modules\\natejs4\\src\\index.js",
+        "parent_id": "aOvRycswDx0ZIAiX",
+        "fsPath": "c:\\Pro\\diddo\\react\\node_modules\\natejs4\\src\\index.js",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "4BC5DEZNi9TydUte"
+    },
+    {
+        "type": "File",
+        "name": "c:\\Pro\\diddo\\react\\node_modules\\natejs4\\src\\index.ts",
+        "parent_id": "aOvRycswDx0ZIAiX",
+        "fsPath": "c:\\Pro\\diddo\\react\\node_modules\\natejs4\\src\\index.ts",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "lUHmT9ywDiEJKZNp"
+    },
+    {
+        "type": "File",
+        "name": "c:\\Pro\\diddo\\react\\src\\App.tsx",
+        "parent_id": "aOvRycswDx0ZIAiX",
+        "fsPath": "c:\\Pro\\diddo\\react\\src\\App.tsx",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "s8WOXK2aSofZrQtq"
+    },
+    {
+        "type": "Group",
+        "name": "experiment",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "QdfjacglCKr4FGIZ"
+    },
+    {
+        "type": "File",
+        "name": "c:\\Pro\\diddo\\experiment\\src\\index.js",
+        "parent_id": "QdfjacglCKr4FGIZ",
+        "fsPath": "c:\\Pro\\diddo\\experiment\\src\\index.js",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "q8b1lot6QAeCSV05"
+    },
+    {
+        "type": "File",
+        "name": "c:\\Pro\\diddo\\experiment\\package.json",
+        "parent_id": "QdfjacglCKr4FGIZ",
+        "fsPath": "c:\\Pro\\diddo\\experiment\\package.json",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "cuwWKqVMiSxFg4d3"
+    },
+    {
+        "type": "File",
+        "name": "c:\\Pro\\diddo\\experiment\\src\\index.ts",
+        "parent_id": "QdfjacglCKr4FGIZ",
+        "fsPath": "c:\\Pro\\diddo\\experiment\\src\\index.ts",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "R8B3FjsGZIxVMhAN"
+    }
+]
