@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/diddo/static/css/main.9fad1668.css",
+    "main.css": "/diddo/static/css/main.468d56b2.css",
     "main.js": "/diddo/static/js/main.271fd87f.js",
     "static/js/787.f4486327.chunk.js": "/diddo/static/js/787.f4486327.chunk.js",
     "static/media/typewriter.png": "/diddo/static/media/typewriter.6dba0657120cbeb899e7.png",
     "index.html": "/diddo/index.html",
-    "main.9fad1668.css.map": "/diddo/static/css/main.9fad1668.css.map",
+    "main.468d56b2.css.map": "/diddo/static/css/main.468d56b2.css.map",
     "main.271fd87f.js.map": "/diddo/static/js/main.271fd87f.js.map",
     "787.f4486327.chunk.js.map": "/diddo/static/js/787.f4486327.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9fad1668.css",
+    "static/css/main.468d56b2.css",
     "static/js/main.271fd87f.js"
   ]
 }
