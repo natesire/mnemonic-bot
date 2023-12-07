@@ -1,4 +1,6 @@
-# Memory tool to help recall all the built-in functions for any programming languages.
+# Memory Bot
+
+Memory tool to help recall all the built-in functions for any programming languages.
 
 Start with acronyms and generate all the permutations of possible words that equal an acronym. The tool runs like a chat-bot.
 
@@ -10,9 +12,9 @@ View the frontend on Github Pages built with ReactJS
 
 https://natesire.github.io/memory
 
-## Run the app locally
+## Run the ReactJS app locally
 
-In the react directory and backend directory, you can run:
+### `cd react`
 
 ### `npm run start`
 
