@@ -1,8 +1,8 @@
 {
-  "name": "diddo",
+  "name": "memory-bot",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://natesire.github.io/diddo",
+  "homepage": "http://natesire.github.io/memory-bot",
   "type": "module",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
