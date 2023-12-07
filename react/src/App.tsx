@@ -3,15 +3,15 @@ import logo from './logo.svg';
 import typewriter from './typewriter.png'
 import './App.css';
 
-import Frontend from 'natejs/src/index';
+//import Frontend from 'natejs/src/index';
 
 function handleSubmit() {
   const command = document.getElementById('command') as HTMLInputElement;
   const chat = document.getElementById('chat') as HTMLTextAreaElement;
   chat.value += 'Me: ' + command.value + '\n';
 
-  let frontend = new Frontend();
-  frontend.fetch("http://localhost:3000");
+  //let frontend = new Frontend();
+  //frontend.fetch("http://localhost:3000");
 
   // send to the server
   

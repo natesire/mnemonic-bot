@@ -1,6 +1,0 @@
-compiled-with-problems:
-  line1: Module parse failed: Unexpected token (7:17)
-  line2: File was processed with these loaders:
-  line3: * ./node_modules/source-map-loader/dist/cjs.js
-  line4: You may need an additional loader to handle the result of these loaders.
-  code1: async fetch(url?: string) {
