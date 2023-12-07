@@ -1,12 +1,8 @@
 # Memory Bot
 
-Memory tool to help recall all the built-in functions for any programming languages.
+Memory chat bot helps train you on memorizing all the built-in functions for any programming language.
 
-Start with acronyms and generate all the permutations of possible words that equal an acronym. The tool runs like a chat-bot.
-
-For example:
-
-NODE = Not Other....
+Start with acronyms and generate all the permutations of possible words that satisfy an acronym.
 
 View the frontend on Github Pages built with ReactJS
 
@@ -27,7 +23,7 @@ Launches the test runner in the interactive watch mode.
 
 ### Optional Backend
 
-Some example words are hard coded into the frontend so you can see the working app without a backend server.
+Data included into the frontend so you can see the working ReactJS app without a backend server.
 
 ### Dependencies
 
