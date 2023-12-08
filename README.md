@@ -1,16 +1,20 @@
-# Diddo.ai Chatbot
+# Memory tool to help recall all the built-in functions for any programming languages.
 
-Customize your own chatbot.
+Start with acronyms and generate all the permutations of possible words that equal an acronym. The tool runs like a chat-bot.
+
+For example:
+
+NODE = Not Other....
 
 View the frontend on ReactJS at Github Pages
 
-https://natesire.github.io/diddo
+https://natesire.github.io/memory
 
 ![alt text](https://github.com/natesire/anagrams/blob/main/public/githubPages.png)
 
 ## Available NPM NodeJS Scripts
 
-In the project root directory and backend directory, you can run:
+In the react directory and backend directory, you can run:
 
 ### `npm run start`
 
@@ -30,3 +34,7 @@ Some example words are hard coded into the frontend so you can see the working a
 Node 16.0.0
 
 NPM 7.10.0
+
+### Troubleshooting
+
+1. Cannot find module natejs

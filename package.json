@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "natejs": "github:natesire/natejs"
+  }
+}

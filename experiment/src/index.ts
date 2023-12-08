@@ -1,3 +1,3 @@
-import helloWorld from 'natejs4/src/index';
+import helloWorld from 'natejs/src/index';
 
 helloWorld();

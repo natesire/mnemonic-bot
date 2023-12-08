@@ -3,10 +3,18 @@ import logo from './logo.svg';
 import typewriter from './typewriter.png'
 import './App.css';
 
-import helloWorld from 'natejs4/src/index.js';
+import Frontend from 'natejs/src/index';
 
-function hello() {
-  helloWorld();
+function handleSubmit() {
+  const command = document.getElementById('command') as HTMLInputElement;
+  const chat = document.getElementById('chat') as HTMLTextAreaElement;
+  chat.value += 'Me: ' + command.value + '\n';
+
+  let frontend = new Frontend();
+  frontend.fetch("http://localhost:3000");
+
+  // send to the server
+  
 }
 
 function App() {
@@ -35,7 +43,7 @@ function App() {
           type="submit"
           className="myButton"
           value=">>"
-          onClick={handleClickOnGenerateButton}
+          onClick={handleSubmit}
         ></input>
 
         <p id="searchFor" className="searchFor"></p>
@@ -50,10 +58,6 @@ function search() {
   chat.value += 'Me: ' + 'search' + '\n';
 }
 
-function handleClickOnGenerateButton() {
-  const command = document.getElementById('command') as HTMLInputElement;
-  const chat = document.getElementById('chat') as HTMLTextAreaElement;
-  chat.value += 'Me: ' + command.value + '\n';
-}
+
 
 export default App;
