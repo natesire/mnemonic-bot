@@ -6,13 +6,11 @@ For example:
 
 NODE = Not Other....
 
-View the frontend on ReactJS at Github Pages
+View the frontend on Github Pages built with ReactJS
 
 https://natesire.github.io/memory
 
-![alt text](https://github.com/natesire/anagrams/blob/main/public/githubPages.png)
-
-## Available NPM NodeJS Scripts
+## Run the app locally
 
 In the react directory and backend directory, you can run:
 
